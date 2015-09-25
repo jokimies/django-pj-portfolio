@@ -1,9 +1,6 @@
 .. :changelog:
 
-History
--------
+v0.1.0 (2015-09-25)
+-------------------
 
-0.1.0 (2014-01-01)
-++++++++++++++++++
-
-* First release on PyPI.
+- Initial commit. [Petri Jokimies]
