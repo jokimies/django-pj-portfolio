@@ -1,3 +1,8 @@
+GITCHLOGBIN   = gitchangelog
+CHANGELOGFILE = HISTORY.rst
+GITCHLOG      = $(GITCHLOGBIN) > $(CHANGELOGFILE) || exit 1
+FIXCHLOG      = python fixhistory.py $(CHANGELOGFILE)
+
 .PHONY: clean-pyc clean-build docs
 
 help:
@@ -41,6 +46,10 @@ coverage:
 docs:
 	rm -f docs/django-pj-portfolio.rst
 	rm -f docs/modules.rst
+	$(GITCHLOG)
+	$(FIXCHLOG)
+	sh replace_version.sh
+	python setup.py check --restructuredtext
 	sphinx-apidoc -o docs/ portfolio
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
