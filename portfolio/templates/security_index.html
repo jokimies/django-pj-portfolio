@@ -1,0 +1,31 @@
+{% extends "portfolio:portfolio/portfolio_base.html" %}
+
+{% block angular-app %}
+    ng-app="wwwmycom"
+{% endblock angular-app %}
+
+{% block base_href %}
+    <base href="/portfolio/securities/">
+{% endblock base_href %}
+
+{% block title %}Securities{% endblock %}
+
+{% block extra_head %}
+    {% include 'portfolio_styles.html' %}
+{% endblock extra_head %}
+
+{% block portfolio_content %}
+    <div class="container-fluid">
+	<div class="row">
+	    <div class="col-md-4 col-md-offset-4 ng-view"></div>
+	</div>
+	<a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-security"
+	   href="javascript:void(0)"
+	   ng-dialog="/static/templates/securities/new-security.html"
+	   ng-dialog-controller="NewSecurityController as vm">Add
+	</a>
+    </div>
+{% endblock portfolio_content %}
+{% block extra_scripts %}
+    {% include 'portfolio_javascripts.html' %}
+{% endblock extra_scripts %}

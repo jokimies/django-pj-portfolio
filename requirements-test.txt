@@ -1,0 +1,11 @@
+coverage
+mock>=1.0.1
+flake8>=2.1.0
+tox>=1.7.0
+factory-boy==2.5.2
+pytest-django
+
+# Additional test requirements go here
+
+# include common requirements
+-r requirements.txt

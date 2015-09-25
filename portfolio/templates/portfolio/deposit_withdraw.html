@@ -1,15 +1,16 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
-{% block title %}Buy Security{% endblock %}
+{% block title %} {{ title }} {% endblock %}
 
 {% block content %}
 
-<h2>Portfolio: Buy Security</h2>
+<h2>Portfolio: {{ action_title }} Cash</h2>
 <hr>
 
 <form method="post">{% csrf_token %}
   <table>
-    {{ form.as_table }}
+    {{ form | crispy }}
   </table>
   <input type="submit" />
 </form>

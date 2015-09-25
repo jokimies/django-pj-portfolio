@@ -1,0 +1,9 @@
+django>=1.8.0
+wheel==0.24.0
+# Additional requirements go here
+django-pj-core
+djangorestframework
+django-app-namespace-template-loader
+# Currencies
+django-currency-history==0.1.1
+#mailer==0.8.1

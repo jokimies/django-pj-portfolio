@@ -1,0 +1,54 @@
+{% extends "portfolio:portfolio/portfolio_base.html" %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block portfolio_page_title %}
+Dividends <span id="dividendYear">{{ year }}</span>
+{% endblock portfolio_page_title %}
+
+{% block portfolio_content %}
+
+    <div class="panel panel-default">
+        <div id="chart_panel" class="panel-body" 
+            style="width:100%;height:314px"></div>
+    </div>
+
+    <table class="table table-striped table-bordered">
+	<tr>
+	    <th>Date</th>
+	    <th>Security</th>
+	    <th>Total</th>
+	    <th>Price</th>
+	    <th>Commission</th>
+	    <th>&nbsp;</th>
+	</tr>
+
+	{% for t in object_list %}
+	    <tr>
+		<td><a href="{{t.id}}">{{t.date|date:"d M Y"}}</a></td>
+		<td>{{t.security}}</td>
+		<td>{{t.cash_amount}}</td>
+		<td>{{t.price}}</td>
+		<td>{{t.commission}}</td>
+		<td><a href="{{t.id}}/delete">Delete</a></td> <!-- " -->
+	    </tr>
+	{% endfor %}
+	<tr>
+	    <td> Total: </td>
+	    <td> </td>
+	    <td> {{divsum}} </td>
+	    <td> </td>
+	    <td> </td>
+	    <td> </td>
+
+	</tr>
+
+
+    </table>
+
+  
+{% endblock portfolio_content %}
+
+{% block portfolio_extra_scripts %}
+    {% include 'portfolio-monthly-div-scripts.html' %}
+{% endblock portfolio_extra_scripts %}

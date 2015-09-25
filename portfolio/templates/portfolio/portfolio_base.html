@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block active_nav_tab %}active{% endblock %}
+
+{% block extra_head %}
+ <link rel="stylesheet" href="{{ STATIC_URL }}css/portfolio_styles.css" />
+
+{% endblock extra_head %}
+
+{% block content %}
+
+<h2>Portfolio:{% block portfolio_page_title %}{% endblock portfolio_page_title %}</h2>
+<hr>
+
+<h3>{{ account.name }} </h3>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+	<div class="list-group-item"><a href="/portfolio/account/{{ account.id }}/deposit">Deposit Cash</a></div>
+	<div class="list-group-item"><a href="/portfolio/account/{{ account.id }}/withdraw">Withdraw Cash</a></div>
+	<div class="list-group-item"><a href="/portfolio/account/{{ account.id }}/transaction">Buy/Sell Security</a></div>
+	<div class="list-group-item"><a href="/portfolio/account/{{ account.id }}/interest">Receive Interest
+	Payment</a></div> 
+	<div class="list-group-item"><a href="/portfolio/account/{{ account.id }}/div">Receive Dividend</a></li></div>
+	<hr>
+	<div class="list-group-item"><a href="/portfolio/txn/{{ account.id }}/byname"> Show
+	transactions </a></div> <!-- " to get emacs coloring correct -->
+	<div class="list-group-item"><a href="/portfolio/txn/{{ account.id }}/div"> Show
+	dividends </a></div> <!-- " to get emacs coloring correct -->
+	<hr>
+	    <div class="list-group-item"><a href="/portfolio/securities/"> List
+	securities </a></div>
+
+    </div>
+    <div class="col-md-8">
+      {% block portfolio_content %}
+      {% endblock portfolio_content %}
+    </div> <!-- col-md-4 -->
+  </div> <!-- row -->
+</div> <!-- container -->
+
+{% endblock content %}
+
+{% block extra_scripts %}
+    <!-- Extra script sfor this app -->
+    {% include 'portfolio_javascripts.html' %}
+
+    {% block portfolio_extra_scripts %}
+    {% endblock portfolio_extra_scripts %}
+
+{% endblock extra_scripts %}

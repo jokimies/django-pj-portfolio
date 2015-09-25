@@ -4,10 +4,10 @@
 
 {% block content %}
 
-<h2>Portfolio: Transactions</h2>
+<h2>Portfolio: Transactions </h2>
 <hr>
 
-<table>
+<table class="table table-striped table-bordered">
   <tr>
     <th>Date</th>
     <th>Action</th>
@@ -26,9 +26,20 @@
     <td>{{t.shares}}</td>
     <td>{{t.price}}</td>
     <td>{{t.commission}}</td>
-    <td><a href="{{t.id}}/delete">Delete</a></td>
+    <td><a href="{{t.id}}/delete">Delete</a></td> <!-- " -->
   </tr>
   {% endfor %}
+  <tr>
+    <td> Total: </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+
+
+    <td> {{divsum}} </td>
+  </tr>
+
 
 </table>
 

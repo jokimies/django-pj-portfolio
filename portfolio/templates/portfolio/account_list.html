@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "portfolio:portfolio/portfolio_base.html" %}
 
 {% block title %}Accounts{% endblock %}
 
@@ -7,24 +7,26 @@
 <h2>Portfolio: Accounts</h2>
 <hr>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>&nbsp;</th>
-  </tr>
-
-  {% for a in object_list %}
-  <tr>
-    <td><a href="account/{{a.id}}">{{a.name}}</a></td>
-    <td>
-      <a href="account/{{a.id}}/edit">Edit</a>
-      <a href="account/{{a.id}}/delete">Delete</a>
-    </td>
-  </tr>
-  {% endfor %}
-
+<table id="id_account_table" class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Account name</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in object_list %}
+      <tr>
+	<td><a href="account/{{a.id}}">{{a.name}}</a></td>
+	<td>
+	  <a href="account/{{a.id}}/edit">Edit</a>
+	  <a href="account/{{a.id}}/delete">Delete</a>
+	</td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
-<p><a href="account/create">Create an account</a></p>
+<p><a href="account/create" id="id_create_account" class="btn btn-primary btn-sm" role="button" > Create an account </span> </a></p>
 
 {% endblock %}

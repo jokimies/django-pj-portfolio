@@ -1,0 +1,7 @@
+{% load compress %}
+{% load staticfiles %}
+
+{% compress css %}
+  <link rel="stylesheet" href={% static 'css/portfolio_styles.css' %} media="screen"> <!-- " -->
+
+{% endcompress %}

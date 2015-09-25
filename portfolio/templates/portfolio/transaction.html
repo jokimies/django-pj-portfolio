@@ -1,0 +1,54 @@
+{% extends "portfolio:portfolio/portfolio_base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Buy Security / Add dividend{% endblock %}
+
+{% block portfolio_page_title %}
+Transactions {{ account.name }}
+{% endblock portfolio_page_title %}
+
+{% block portfolio_nav %}
+  <div class="list-group-item"><a href="/portfolio/account/{{ account.id }}/">
+  Portfolio Home </a></div> <!-- " to get emacs coloring correct -->
+  <hr>
+  <div class="list-group-item"><a href="deposit">Deposit Cash</a></div>
+  <div class="list-group-item"><a href="transaction">Buy/Sell Security</a></div>
+  <div class="list-group-item"><a href="interest">Receive Interest
+  Payment</a></div> 
+  <div class="list-group-item"><a href="div">Receive Dividend</a></li></div>
+  <hr>
+    <div class="list-group-item"><a href="/portfolio/txn/{{ account.id }}/byname"> Show 	transactions </a></div> <!-- " to get emacs coloring correct -->
+    <div class="list-group-item"><a href="/portfolio/txn/{{ account.id }}/div"> Show dividends </a></div> <!-- " to get emacs coloring correct -->
+
+{% endblock portfolio_nav %}
+
+{% block portfolio_content %}
+  
+  <h2> {{ sub_title }} </h2>
+  <hr>
+    {% if yearly_divs %}
+      
+      {% for y in years %}
+	<a href="{% url 'divbyyear' account.id  y.year|stringformat:'d' %}">{{ y.year | stringformat:'d' }}</a>
+      {% endfor %}
+	  
+    {% endif %}
+
+    <div class="panel panel-default">
+        <div id="chart_panel" class="panel-body" 
+            style="width:100%;height:314px"></div>
+    </div>
+
+    <form method="post">{% csrf_token %}
+    <table>
+      {{ form | crispy }}
+    </table>
+    <input type="submit" />
+    </form>
+{% endblock portfolio_content %}
+
+{% block portfolio_extra_scripts %}
+    {% include 'portfolio-cumul-div-scripts.html' %}
+{% endblock portfolio_extra_scripts %}
+

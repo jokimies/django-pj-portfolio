@@ -1,0 +1,13 @@
+.btn-add-new-security {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+td span.positive {
+    color: #009933;
+}
+
+td span.negative {
+    color:#CC3333;
+}
