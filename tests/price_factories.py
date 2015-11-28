@@ -1,10 +1,10 @@
 # 3rd party
 from django.utils import timezone
-
+import factory
 # Own
 from portfolio.models import Price
 
-from .test_security_model import *
+from .security_factories import SecurityFactory
 from .currency_factories import CurrencyFactory
 
 

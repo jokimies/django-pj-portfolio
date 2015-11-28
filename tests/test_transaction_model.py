@@ -8,7 +8,7 @@ import factory
 
 from portfolio.models import Transaction
 
-from .test_security_model import SecurityFactory
+from .security_factories import SecurityFactory
 from .account_factories import AccountFactory
 from .currency_factories import CurrencyFactory
 

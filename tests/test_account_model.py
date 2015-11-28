@@ -7,8 +7,8 @@ from django.utils import timezone
 
 # Own
 
-from .test_security_model import SecurityFactory
-from .test_price_model import PriceFactory
+from .security_factories import SecurityFactory
+from .price_factories import PriceFactory
 from .currency_factories import *
 from .account_base import AccountTestCase
 

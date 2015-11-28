@@ -3,24 +3,8 @@ import factory
 from django.test import TestCase
 
 # Own
-
 from portfolio.models import Security
-
-
-class SecurityFactory(factory.django.DjangoModelFactory):
-    """
-    Factory for creating securities
-    """
-
-    class Meta:
-        model = Security
-
-    # Security name by default will be 'Security 1' for the first created,
-    # 'Category 2' for the second etc.
-    name = factory.Sequence(lambda n: 'Security {0}'.format(n))
-
-    # Same for ticker
-    ticker = factory.Sequence(lambda n: 'Ticker {0}'.format(n))
+from .security_factories import SecurityFactory
 
 ##########
 #
