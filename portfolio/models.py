@@ -390,9 +390,27 @@ class SecurityManager(models.Manager):
         return security
 
 @python_2_unicode_compatible
+class PriceTracker(models.Model):
+    """
+    Site to get security prices from
+    """
+    name = models.CharField(max_length=40, blank=False)
+
+    def __str__(self):
+        return self.name
+
+def set_default_tracker():
+    """
+    Set default tracker to Kauppalehti for new Securities
+    """ 
+    tracker, created = PriceTracker.objects.get_or_create(name='Kauppalehti')
+    return tracker.pk
+
+@python_2_unicode_compatible
 class Security(models.Model):
     ticker = models.CharField(max_length = 40, blank=False)
     name = models.CharField(max_length = 40, blank=False)
+    price_tracker = models.ForeignKey(PriceTracker, default=set_default_tracker)
 
     objects = SecurityManager()
 
@@ -412,6 +430,7 @@ class Price(models.Model):
                                blank=True, null=True)
     change_percentage = models.DecimalField(decimal_places=2, max_digits=6,
                                blank=True, null=True)
+
     def __str__(self):
         return self.security.name + ' ' + str(self.date) + ' ' + str(self.price)
 
