@@ -1,4 +1,4 @@
-django>=1.8.0
+django==1.8.4
 wheel==0.24.0
 # Additional requirements go here
 django-pj-core
