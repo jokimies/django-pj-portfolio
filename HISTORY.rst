@@ -1,5 +1,24 @@
 .. :changelog:
 
+v1.0.1 (2016-01-15)
+-------------------
+
+Fix
+~~~
+
+- *requirements*: Specific about Django version. [Petri Jokimies]
+
+
+
+
+
+
+
+Other
+~~~~~
+
+- *update prices*: Adapt to KL's new web page. [Petri Jokimies]
+
 v1.0.0 (2015-11-30)
 -------------------
 
