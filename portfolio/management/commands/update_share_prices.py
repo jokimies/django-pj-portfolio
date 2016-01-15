@@ -102,7 +102,7 @@ class Command(BaseCommand):
             self.soup = BeautifulSoup(stock_page)
 
         # At the moment, 7th table has is the one with stock data
-        table = self.soup('table')[7]
+        table = self.soup('table')[6]
 
         # All prices are in Euros
         currency_euro = Currency.objects.filter(
