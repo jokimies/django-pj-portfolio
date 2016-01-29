@@ -10,13 +10,13 @@ from django.utils import timezone
 from .security_factories import SecurityFactory
 from .price_factories import PriceFactory
 from .currency_factories import *
-from .account_base import AccountTestCase
+from .account_base import AccountBase
 
 
 from portfolio.models import Account
 
     
-class AccountModelTest(AccountTestCase):
+class AccountModelTest(AccountBase, TestCase):
 
     longMessage = True
 

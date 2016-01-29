@@ -5,7 +5,7 @@ from django.test import TestCase
 # Own
 from .account_factories import AccountFactory
 
-class AccountTestCase(TestCase):
+class AccountBase():
 
     def create_account(self, name=None):
         """
