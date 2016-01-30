@@ -146,7 +146,6 @@ class SecurityViewSet(viewsets.ModelViewSet):
             Security.objects.create_security(**serializer.validated_data)
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
-
         return Response({
             'status': 'Bad request',
             'message': 'Account could not be created with received data.'
@@ -178,7 +177,31 @@ class DividendChartByYearView(APIView):
 
         return response
 
+
+class PositionView(APIView):
+    """
+    APIView to get positions for a certain account
+    """
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get list of all positions
+
+        - **parameters**, **return**::
+
+          :param request: ``Request`` instance (from REST framework)
+          :param kwargs: keyword parameters from URL, specifically ``account_id``
+          :return: positions dictionary
+        """
+
+        account = get_object_or_404(Account, pk=kwargs['account_id'])
+
+        data = account.positions()
+
+        return Response(data, status=status.HTTP_200_OK)
+
 # Functions
+
 
 def deposit(request, account_id):
     a = get_object_or_404(Account, pk=account_id)

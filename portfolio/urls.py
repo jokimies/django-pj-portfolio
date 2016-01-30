@@ -36,4 +36,6 @@ urlpatterns = patterns(
     url(r'^api/v1/', include(router.urls)),
     url(r'^securities/.*$', SecurityIndexView.as_view(), name='security-index'),
     url(r'^api/v1/transactions/dividend/(?P<year>[0-9]{4})/$',  DividendChartByYearView.as_view(), name='dividend-by-month-by-year'),
+    #
+    url(r'^api/v1/positions/(?P<account_id>\d+)/$', PositionView.as_view(), name='positions'),
 )
