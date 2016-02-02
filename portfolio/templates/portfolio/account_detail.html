@@ -16,8 +16,55 @@ Account
     <li class="active"><a href="#summary" data-toggle="tab">Summary</a></li>
     <li><a href="#performance" data-toggle="tab">Performance</a></li>
   </ul>
-  <div id="content" class="tab-content">
-    <div class="tab-pane active" id="summary">
+  <div id="content" class="tab-content" ng-app="portfolio">
+    <div class="tab-pane active" id="summary"
+    ng-controller="AccountSummaryController as vm">
+	<table class="table table-bordered table-striped">
+	    <thead>
+		<tr>
+		    <th>Security</th>
+		    <th class="nobreak">Last Price
+		    <div>
+			<div class="nobreak t">Date</div>
+		    </div>
+		    </th>
+		    <th>Change</th>
+		    <th>Average price </th>
+		    <th>Shares</th>
+		    <th>Mkt Value</th>
+		    <th>Weigth </th> 
+		    <th>Overall return </th>
+		</tr>
+	    </thead>
+	    <tbody>
+		<tr ng-repeat="(security, data) in vm.positions">
+		    <td> 
+			{% verbatim %}
+			{{ security }} 
+		    </td> 
+		    <td>
+			{{ data.price }}
+		    </td>
+		    <td> 
+			<span class="">
+			    {{ data.change }}
+			</span>
+			<div>
+			    <div class="topborder">
+				<span class="">
+				    {{ data.change_percentage }} %
+				</span>
+			    </div>
+			</div>
+		    </td>
+		    <td> {{ data.average }} </td>
+		    <td> {{ data.shares }} </td>
+		    <td> {{ data.mktval }} </td>
+		    <td> {{ data.folio_percentage }} </td>
+		    {% endverbatim %}
+		</tr>
+	    </tbody>
+	</table>
       <table id="shareDetail" class="tablesorter">
 	<thead>
 	  <tr>
