@@ -19,7 +19,7 @@ Account
   <div id="content" class="tab-content" ng-app="portfolio">
     <div class="tab-pane active" id="summary"
     ng-controller="AccountSummaryController as vm">
-	<table class="table table-bordered table-striped">
+	<table id="shareDetail" class="table table-bordered table-striped tablesorter">
 	    <thead>
 		<tr>
 		    <th>Security</th>
@@ -37,107 +37,75 @@ Account
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr ng-repeat="(security, data) in vm.positions">
+		<tr ng-repeat="(security, data) in vm.positions"
+		    ng-if="data.shares >=1" >
 		    <td> 
 			{% verbatim %}
 			{{ security }} 
 		    </td> 
 		    <td>
 			{{ data.price }}
+			<div>
+			    <div class="nobreak topborder"> 
+				{{ data.latest_date|date:"dd-MMM-yyyy"  }} 
+			    </div>
+			</div>
 		    </td>
 		    <td> 
-			<span class="">
+			<span ng-class="{ 
+			    'negative': data.change < 0,
+			    'positive': data.change > 0 }">
 			    {{ data.change }}
 			</span>
 			<div>
 			    <div class="topborder">
-				<span class="">
+				<span ng-class="{ 
+				    'negative': data.change < 0, 
+				    'positive': data.change > 0 }">
 				    {{ data.change_percentage }} %
 				</span>
 			    </div>
 			</div>
 		    </td>
-		    <td> {{ data.average }} </td>
+		    <td> {{ data.average|number:2 }} </td>
 		    <td> {{ data.shares }} </td>
-		    <td> {{ data.mktval }} </td>
-		    <td> {{ data.folio_percentage }} </td>
+		    <td> {{ data.mktval|number:2 }} </td>
+		    <td> {{ data.folio_percentage|number:2  }} </td>
+		    <td>
+			<span ng-class="{ 
+			    'negative': data.total_return < 0,
+			    'positive': data.total_return > 0 }">
+			    {{ data.total_return|number:2 }} % 
+			</span>
+		    </td>
 		    {% endverbatim %}
 		</tr>
 	    </tbody>
+	    {% verbatim %}
+	    <tbody class="tablesorter-no-sort">
+		<tr>
+		    <th>Cash:</th>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>{{ vm.positions['$CASH'].basis|number:2 }} </td>
+		    <td>&nbsp;</td>
+		    <td>{{ vm.total_return|number:2 }} %</td>
+		</tr>
+		<tr>
+		    <th>Total:</th>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>&nbsp;</td>
+		    <td>{{ vm.total_mktval|number:2 }}</td>
+		    <td>&nbsp;</td>
+		    <td>{{ vm.total_return|number:2 }} %</td>
+		</tr>
+	    </tbody>
+	    {% endverbatim %}
 	</table>
-      <table id="shareDetail" class="tablesorter">
-	<thead>
-	  <tr>
-	    <th>Security</th>
-	    <th class="nobreak">Last Price
-	     <div>
-		 <div class="nobreak t">Date</div>
-	     </div>
-	    </th>
-	    <th>Change</th>
-	    <th>Average price </th>
-	    <th>Shares</th>
-	    <th>Mkt Value</th>
-	    <th>Folio Percentage </th> 
-	    <th>Overall return </th>
-	  </tr>
-	</thead>
-	<tbody>
-	  {% for security, data in account.positions.items %}
-	    {% if security != '$CASH' and data.shares >= 1 %}
-	      <tr>
-		<td>{{ security }}</td>
-		<td>{{ data.price|floatformat:2 }} 
-		 <div>
-		     <div class="nobreak topborder"> {{ data.latest_date|date:"d-M-Y"  }} </div>
-		 </div>
-		</td>
-		<td> 
-		    <span class="{{ data.change|colorize_percentage }}">
-			{{ data.change|floatformat:2}} 
-		    </span> 
-		 <div>
-		     <div class="topborder"> 
-			 <span class="{{ data.change|colorize_percentage }}">  
-			     {{ data.change_percentage|floatformat:2 }} % 
-			 </span>
-		     </div>
-		 </div>
-		</td>
-		<td>{{ data.average|floatformat:2|intcomma }}</td>
-		<td>{{ data.shares|floatformat:2 }}</td>
-		<td>{{ data.mktval|floatformat:2|intcomma }}</td>
-		<td> {{ data.folio_percentage|floatformat:2|intcomma }} % </td>
-		<td>
-		    <span class="{{ data.total_return|colorize_percentage }}"> 
-			{{ data.total_return|floatformat:2 }} %
-		    </span>
-		</td>
-	      </tr>
-	    {% endif %}
-	  {% endfor %}
-	</tbody>
-	<tbody class="tablesorter-no-sort">
-	  <tr>
-	    <th>Cash:</th>
-	    <td>&nbsp;</td>
-	    <td>&nbsp;</td>
-	    <td>&nbsp;</td>
-	    <td>{{ account.cash.basis|floatformat:2|intcomma }}</td>
-	    <td>&nbsp;</td>
-	    <td>{{ account.cash.total_return|floatformat:2|intcomma }} %</td>
-	  </tr>
-	  <tr>
-	    <th>Total:</th>
-	    <td>&nbsp;</td>
-	    <td>&nbsp;</td>
-	    <td>{{ account.average|floatformat:2|intcomma }}</td>
-	    <td>{{ account.mktval|floatformat:2|intcomma }}</td>
-	    <td>&nbsp;</td>
-	    <td>{{ account.total_return|floatformat:2|intcomma }} %</td>
-	  </tr>
-	</tbody>
-      </table>
     </div> <!-- tab summary -->
     <div class="tab-pane" id="performance">
       <table id="sharePerformance" class="tablesorter">
