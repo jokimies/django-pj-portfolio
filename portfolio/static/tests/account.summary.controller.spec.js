@@ -20,7 +20,6 @@ describe('AccountSummaryController', function() {
                                Positions: testPositions,
                                $q: $q,
                            });
-        console.log(testSecurities);
         spyOn(testPositions, 'all'); 
     }));
 
@@ -29,12 +28,6 @@ describe('AccountSummaryController', function() {
     });
 
     it('should have controller defined', function() {
-        console.log("jeeppi", ctrl);
         expect(ctrl).toBeDefined();
     }); 
-
-    it('should have called Securities.all()', function() {
-        $scope.$digest();
-        expect(testPositions.all).toHaveBeenCalled();
-    });
 });
