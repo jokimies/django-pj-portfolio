@@ -17,6 +17,8 @@
 
     function AccountSummaryController($timeout, $q, Positions, Securities) {
         var vm = this;
+        vm.total_mktval = 0;
+
 
         var promises = {
             positions: Positions.all(),
@@ -40,7 +42,6 @@
 
             $q.all(promises).then(promisesSuccessFn, promisesErrorFn);
 
-            console.log($q);
             /**
              * @name positionsSuccessFn
              * @desc
@@ -118,6 +119,12 @@
                             vm.positions[securityName]['price'] = data[0]['l'];
                             vm.positions[securityName]['change'] = data[0]['c'];
                             vm.positions[securityName]['change_percentage'] = data[0]['cp'];
+                            vm.total_mktval = 0;
+                            for (var position in vm.positions) {
+                                if (vm.positions.hasOwnProperty(position)) {
+                                    vm.total_mktval += vm.positions[position]['mktval'];
+                                }
+                            }
                         }
                     }
                 }
