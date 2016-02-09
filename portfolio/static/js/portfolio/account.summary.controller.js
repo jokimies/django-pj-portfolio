@@ -114,7 +114,7 @@
                            is not defined
                         */
                         if ( typeof vm.positions[securityName] !== 'undefined' ) {
-                                                    /* l is latest value */
+                            /* l is latest value */
 
                             vm.positions[securityName]['price'] = data[0]['l'];
                             vm.positions[securityName]['change'] = data[0]['c'];

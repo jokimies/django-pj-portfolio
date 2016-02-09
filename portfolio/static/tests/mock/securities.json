@@ -1,0 +1,247 @@
+[
+    {
+        "ticker": "blaa",
+        "name": "Ahlstrom",
+        "id": 34
+    },
+    {
+        "ticker": "blaa",
+        "name": "Aldata Solution Oyj",
+        "id": 7
+    },
+    {
+        "ticker": "ASU1V",
+        "name": "Aspo (LP)",
+        "id": 19
+    },
+    {
+        "ticker": "blaa",
+        "name": "Cargotec Oyj",
+        "id": 9
+    },
+    {
+        "ticker": "N/A",
+        "name": "$CASH",
+        "id": 36
+    },
+    {
+        "ticker": "CEFL",
+        "name": "CEFL",
+        "id": 39
+    },
+    {
+        "ticker": "ELI1V",
+        "name": "Elisa",
+        "id": 25
+    },
+    {
+        "ticker": "FUM1V",
+        "name": "Fortum",
+        "id": 35
+    },
+    {
+        "ticker": "HCP",
+        "name": "HCP Inc.",
+        "id": 49
+    },
+    {
+        "ticker": "ILK2S",
+        "name": "Ilkka-Yhtymä II",
+        "id": 14
+    },
+    {
+        "ticker": "blaa",
+        "name": "Ixonos",
+        "id": 20
+    },
+    {
+        "ticker": "KRA1V",
+        "name": "Kemira",
+        "id": 29
+    },
+    {
+        "ticker": "KMI",
+        "name": "Kinder Morgan Inc.",
+        "id": 46
+    },
+    {
+        "ticker": "blaa",
+        "name": "KONE",
+        "id": 10
+    },
+    {
+        "ticker": "blaa",
+        "name": "Kone B",
+        "id": 4
+    },
+    {
+        "ticker": "blaa",
+        "name": "Konecranes",
+        "id": 11
+    },
+    {
+        "ticker": "blaa",
+        "name": "Larox B",
+        "id": 13
+    },
+    {
+        "ticker": "blaa",
+        "name": "Metso",
+        "id": 27
+    },
+    {
+        "ticker": "MSFT",
+        "name": "Microsoft Corp.",
+        "id": 44
+    },
+    {
+        "ticker": "MORL",
+        "name": "MORL",
+        "id": 37
+    },
+    {
+        "ticker": "NOK1V",
+        "name": "Nokia",
+        "id": 2
+    },
+    {
+        "ticker": "NDA1V",
+        "name": "Nordea Bank",
+        "id": 15
+    },
+    {
+        "ticker": "blaa",
+        "name": "ODIN Offshore",
+        "id": 17
+    },
+    {
+        "ticker": "OHI",
+        "name": "Omega HealthCare Investors Inc.",
+        "id": 48
+    },
+    {
+        "ticker": "OKE",
+        "name": "Oneok Inc",
+        "id": 12
+    },
+    {
+        "ticker": "blaa",
+        "name": "OP-Delta A",
+        "id": 22
+    },
+    {
+        "ticker": "blaa",
+        "name": "OP-Delta B",
+        "id": 5
+    },
+    {
+        "ticker": "blaa",
+        "name": "OP-Itä-Eurooppa B",
+        "id": 6
+    },
+    {
+        "ticker": "blaa",
+        "name": "OP-Tuotto A",
+        "id": 23
+    },
+    {
+        "ticker": "blaa",
+        "name": "OP-Tuotto B",
+        "id": 1
+    },
+    {
+        "ticker": "ORNBV",
+        "name": "Orion B",
+        "id": 26
+    },
+    {
+        "ticker": "blaa",
+        "name": "PKC Group",
+        "id": 21
+    },
+    {
+        "ticker": "PSEC",
+        "name": "Prospect Capital Corporation",
+        "id": 40
+    },
+    {
+        "ticker": "blaa",
+        "name": "Ramirent",
+        "id": 18
+    },
+    {
+        "ticker": "blaa",
+        "name": "Rautaruukki K",
+        "id": 16
+    },
+    {
+        "ticker": "O",
+        "name": "Realty Income Corporation",
+        "id": 47
+    },
+    {
+        "ticker": "O-F",
+        "name": "Realty Income Corp. PRFD F",
+        "id": 42
+    },
+    {
+        "ticker": "SAMAS",
+        "name": "Sampo A",
+        "id": 31
+    },
+    {
+        "ticker": "SAA1V",
+        "name": "Sanoma",
+        "id": 32
+    },
+    {
+        "ticker": "SSW",
+        "name": "Seaspan Corporation",
+        "id": 45
+    },
+    {
+        "ticker": "blaa",
+        "name": "Seligson Suomi -indeksir. A",
+        "id": 28
+    },
+    {
+        "ticker": "blaa",
+        "name": "Seligson Suomi Indeksir. A",
+        "id": 33
+    },
+    {
+        "ticker": "STAG",
+        "name": "STAG Industrial",
+        "id": 41
+    },
+    {
+        "ticker": "TLS1V",
+        "name": "TeliaSonera",
+        "id": 3
+    },
+    {
+        "ticker": "blaa",
+        "name": "Tikkurila",
+        "id": 30
+    },
+    {
+        "ticker": "UPM1V",
+        "name": "UPM-Kymmene",
+        "id": 8
+    },
+    {
+        "ticker": "UNR1V",
+        "name": "Uponor",
+        "id": 24
+    },
+    {
+        "ticker": "WSR",
+        "name": "Whitestone REIT",
+        "id": 43
+    },
+    {
+        "ticker": "YMLP",
+        "name": "Yorkville MLP",
+        "id": 38
+    }
+]

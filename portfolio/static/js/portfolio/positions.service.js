@@ -20,6 +20,7 @@
         var Positions = {
             all: all,
             google_quote: google_quote,
+            market_value: market_value,
         };
         
         return Positions;
@@ -40,6 +41,19 @@
                                      {get: {method:'JSONP', params:{q:security}, 
                                             isArray: true}});
             return quote.get().$promise
+        }
+
+        function market_value(positions) {
+
+            var position;
+            var total = 0;
+
+            for (position in positions) {
+                if (positions.hasOwnProperty(position)) {
+                    total += positions[position]['mktval'];
+                }
+            }
+            return total;
         }
     }
 })();

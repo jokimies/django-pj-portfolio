@@ -20,7 +20,7 @@ describe('Positions service', function () {
         var result;
         Positions.all().then(function (data) {
             result = data.data;
-            expect(result['Metso'].price).toEqual(18);
+            expect(result['Whitestone REIT'].price).toEqual(10.75);
         }, function(data) {
             console.log("Error", data);
         });
@@ -28,4 +28,21 @@ describe('Positions service', function () {
         $httpBackend.flush();
     });
 
+    it('should calculate market value correctly', function() {
+
+        var positions;
+        var mktval;
+
+        Positions.all().then(function (data) {
+            positions = data.data;
+        }, function(data) {
+            console.log("Error", data);
+        });
+
+        $httpBackend.flush();
+
+        mktval = Positions.market_value(positions);
+        expect(mktval).toBeCloseTo(18884.6, 2);
+
+    });
 });

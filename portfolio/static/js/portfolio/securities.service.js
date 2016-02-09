@@ -28,7 +28,6 @@
 	 * @returns {Promise}
 	 */
 	function all() {
-            console.log ("JEEJEE");
 	    return $http.get('/portfolio/api/v1/securities/');
 	}
 
