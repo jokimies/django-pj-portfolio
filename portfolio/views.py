@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from portfolio.models import Transaction, Account, Security
 from portfolio.forms import BuyForm, DepositWithdrawForm, InterestForm, DivForm, TxnBySecurityForm, AccountForm, TransactionDetailForm
 
-from portfolio.serializers import SecuritySerializer
+from portfolio.serializers import SecuritySerializer, AccountSerializer
 
 def decimal_default(obj):
     """ json.dumps: convert decimal to float """
@@ -126,6 +126,14 @@ class DividendYearListView(ListView):
         context['divsum'] = divsum['cash_amount__sum']
         context['year'] = self.kwargs['year']
         return context
+
+class AccountViewSet(viewsets.ModelViewSet):
+    """
+    Returns list of accounts
+    """
+
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
 class SecurityViewSet(viewsets.ModelViewSet):
     """

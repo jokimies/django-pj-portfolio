@@ -3,6 +3,9 @@
 {% load humanize %}
 {% load pjcore_tags %}
 
+{% block base_href %}
+    <base href = "/">
+{% endblock base_href %}
 {% block title %}One Account{% endblock %}
 
 {% block portfolio_page_title %}
@@ -16,10 +19,14 @@ Account
     <li class="active"><a href="#summary" data-toggle="tab">Summary</a></li>
     <li><a href="#performance" data-toggle="tab">Performance</a></li>
   </ul>
+
   <div id="content" class="tab-content" ng-app="portfolio">
+    <span us-spinner="{radius:30, width:8, length: 16}"></span>
+
     <div class="tab-pane active" id="summary"
-    ng-controller="AccountSummaryController as vm">
-	<table id="shareDetail" class="table table-bordered table-striped tablesorter">
+	 ng-controller="AccountSummaryController as vm">
+	<table id="shareDetail" class="table table-bordered table-striped
+				       tablesorter" ng-cloak>
 	    <thead>
 		<tr>
 		    <th>Security</th>
@@ -32,7 +39,7 @@ Account
 		    <th>Average price </th>
 		    <th>Shares</th>
 		    <th>Mkt Value</th>
-		    <th>Weigth </th> 
+		    <th>Weight </th> 
 		    <th>Overall return </th>
 		</tr>
 	    </thead>
@@ -107,6 +114,7 @@ Account
 	    {% endverbatim %}
 	</table>
     </div> <!-- tab summary -->
+
     <div class="tab-pane" id="performance">
       <table id="sharePerformance" class="tablesorter">
 	<thead>

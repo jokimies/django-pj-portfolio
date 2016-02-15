@@ -8,7 +8,7 @@ from portfolio.views import *
 
 router = SimpleRouter()
 router.register(r'securities', SecurityViewSet)
-
+router.register(r'accounts', AccountViewSet, 'api-account')
 
 urlpatterns = patterns(
     '',

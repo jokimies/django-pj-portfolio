@@ -12,17 +12,22 @@
         .controller('AccountSummaryController', 
                     AccountSummaryController);
 
-    AccountSummaryController.$inject = [ '$timeout', '$q', 'Positions', 
-                                         'Securities'];
+    AccountSummaryController.$inject = [ '$timeout', '$q', '$location',
+                                         'Positions',
+                                         'Securities', 'Accounts',
+                                         'Currencies'];
 
-    function AccountSummaryController($timeout, $q, Positions, Securities) {
+    function AccountSummaryController($timeout, $q, $location, Positions,
+                                      Securities, Accounts, Currencies) {
         var vm = this;
-        vm.total_mktval = 0;
-
+        /* Get the account id from URL */
+        var accountID = $location.path().split("/")[3];
 
         var promises = {
-            positions: Positions.all(),
+            positions: Positions.all(accountID),
             securities: Securities.all(),
+            accounts: Accounts.all(),
+            currencies: Currencies.all(),
         }
 
         /* 
@@ -30,6 +35,8 @@
            be able to easily map ticker to name
         */
         vm.securities_d = {};
+
+        vm.total_mktval = 0;
 
         activate();
 
@@ -49,6 +56,8 @@
             function promisesSuccessFn(data, status, headers, config) {
                 vm.positions = data.positions.data;
                 vm.securities = data.securities.data;
+                vm.accounts = data.accounts.data;
+                vm.currencies = data.currencies.data
                 console.log("promisesSuccessFn");
                 getLivePrices();
 
@@ -74,7 +83,6 @@
                 vm.securities_d[ticker] = vm.securities[i].name;
                 console.log(ticker);
                 delay = Math.floor(Math.random()*(maxTime-minTime+1)+minTime);
-                console.log('Delay on ', delay);
 
                 /* call getQuoteForSecurity with 'ticker' argument */
                 $timeout(getQuoteForSecurity.bind(null, ticker),
@@ -94,6 +102,7 @@
             function positionsLiveSuccessFn(data, status, headers, config) {
 
                 var securityName;
+                var securityCurrency;
 
                 if (typeof vm.positions === 'undefined') {
                     /* It should be impossible to get here with
@@ -105,6 +114,9 @@
                     if ( typeof data[0]['t'] !== 'undefined' ) {
 
                         securityName = vm.securities_d[data[0]['t']];
+                        securityCurrency = getCurrency(data[0]['l_cur']);
+                        fx.base = vm.currencies['base'];
+                        fx.rates = vm.currencies.rates;
 
                         /* 
                            vm.positions has securities whise count is
@@ -119,6 +131,16 @@
                             vm.positions[securityName]['price'] = data[0]['l'];
                             vm.positions[securityName]['change'] = data[0]['c'];
                             vm.positions[securityName]['change_percentage'] = data[0]['cp'];
+                            /* convert currency unsed in security price
+                               to base currency and used the converted
+                               value as market value for the security in
+                               questinon 
+                            */
+
+                            vm.positions[securityName]['mktval'] = 
+                                fx(vm.positions[securityName]['price'] * 
+                                vm.positions[securityName]['shares']) 
+                                .from(securityCurrency).to(fx.base);
                             vm.total_mktval = 0;
                             for (var position in vm.positions) {
                                 if (vm.positions.hasOwnProperty(position)) {
@@ -138,7 +160,17 @@
                     console.log('LiveError', data)
                 }
             }
-
+ 
+            function getCurrency(l_cur) {
+                /* 
+                 * l_cur represents lates value with currency
+                 */
+                if (l_cur.indexOf("\u20ac") !== -1 ) {
+                    return 'EUR';
+                } else {
+                    return 'USD';
+                }
+            }
         }
     }
 })();

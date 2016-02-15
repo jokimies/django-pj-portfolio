@@ -29,8 +29,9 @@
          * @name all
          *
          */
-        function all() {
-            return $http.get('/portfolio/api/v1/positions/1/');
+        function all(accountID) {
+            console.log("accountID ", accountID);
+            return $http.get('/portfolio/api/v1/positions/' + accountID + '/');
         }
 
         function google_quote(security) {
