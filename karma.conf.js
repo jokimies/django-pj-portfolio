@@ -23,9 +23,11 @@ module.exports = function(config) {
            loaded first */
         'portfolio/static/js/portfolio/portfolio2.module.js',
         'portfolio/static/js/portfolio/account_summary.module.js',
-        'portfolio/static/js/portfolio/*.module.js',
-        'portfolio/static/tests/**/*.spec.js',
+        'portfolio/static/js/portfolio/**/*.module.js',
         'portfolio/static/js/portfolio/**/*.js',
+        'portfolio/static/js/portfolio/*.js',
+        'portfolio/static/tests/**/*.spec.js',
+        'portfolio/static/vendor/**/*.js',
         // fixtures
         {pattern: 'portfolio/static/tests/mock/*.json', watched: true, served: true, included: false}
     ],
