@@ -18,7 +18,7 @@ describe('Positions service', function () {
 
     it('should have some results', function() {
         var result;
-        Positions.all().then(function (data) {
+        Positions.all('1').then(function (data) {
             result = data.data;
             expect(result['Whitestone REIT'].price).toEqual(10.75);
         }, function(data) {
@@ -33,7 +33,7 @@ describe('Positions service', function () {
         var positions;
         var mktval;
 
-        Positions.all().then(function (data) {
+        Positions.all('1').then(function (data) {
             positions = data.data;
         }, function(data) {
             console.log("Error", data);
