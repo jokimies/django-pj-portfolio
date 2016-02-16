@@ -10,7 +10,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine-jquery', 'jasmine'],
 
 
     // list of files / patterns to load in the browser
@@ -18,13 +18,16 @@ module.exports = function(config) {
         'bower_components/angular/angular.js',
         'bower_components/angular-mocks/angular-mocks.js',
         'bower_components/angular-resource/angular-resource.js',
+        'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
         /* need to  ensure module definitions (in *.module.js files are
            loaded first */
         'portfolio/static/js/portfolio/portfolio2.module.js',
         'portfolio/static/js/portfolio/account_summary.module.js',
         'portfolio/static/js/portfolio/*.module.js',
-        'portfolio/static/tests/**/*.spec.js'
+        'portfolio/static/tests/**/*.spec.js',
         'portfolio/static/js/portfolio/**/*.js',
+        // fixtures
+        {pattern: 'portfolio/static/tests/mock/*.json', watched: true, served: true, included: false}
     ],
 
 
