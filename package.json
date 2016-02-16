@@ -1,0 +1,42 @@
+{
+  "name": "django-pj-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio tracking app for Django",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "karma": "^0.13.19",
+    "karma-phantomjs-launcher": "^0.2.3",
+    "jasmine-core": "^2.4.1",
+    "karma-jasmine": "^0.3.6",
+    "phantomjs": "^1.9.19"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "coveralls": "^2.11.6",
+    "gulp": "^3.9.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-flatten": "^0.2.0",
+    "gulp-less": "^3.0.5",
+    "gulp-sourcemaps": "^1.6.0",
+    "jasmine-jquery": "^2.1.1",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "^0.5.3",
+    "karma-jasmine": "^0.3.6",
+    "karma-jasmine-jquery": "^0.1.1",
+    "karma-junit-reporter": "^0.3.8",
+    "require-dir": "^0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.my.com/personal/django-pj-portfolio.git"
+  },
+  "author": "Petri Jokimies",
+  "license": "ISC"
+}
