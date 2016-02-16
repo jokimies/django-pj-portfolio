@@ -30,7 +30,6 @@
          *
          */
         function all(accountID) {
-            console.log("accountID ", accountID);
             return $http.get('/portfolio/api/v1/positions/' + accountID + '/');
         }
 
