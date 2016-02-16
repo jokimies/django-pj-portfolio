@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*- 
+# -*- encoding: utf-8 -*-
 from __future__ import unicode_literals
 
 from collections import defaultdict
@@ -156,16 +156,16 @@ class Account(models.Model):
                     total_return=0, sold=0)
 
     def update_market_value(self, positions, date):
+
         for security in positions:
             p = positions[security]
             if security == '$CASH':
                 price = 1.00
                 from_currency = self.base_currency
             else:
-                price = Price.objects.filter(
-                    security__name=security, date__lte=date).latest('date').price
-                latest_price = Price.objects.filter(
+                latest_price = Price.objects.select_related('currency').filter(
                     security__name=security, date__lte=date).latest('date')
+                price = latest_price.price
 
                 # What is the currency used for this security
                 from_currency = latest_price.currency.iso_code
@@ -173,13 +173,12 @@ class Account(models.Model):
                 # Store change compared to previous close
                 positions[security]['change'] = latest_price.change
 
-                # Also change percantage
+                # Also change percentage
                 positions[security]['change_percentage'] = latest_price.change_percentage
-                latest_date = Price.objects.filter(security__name=security).latest('date').date
-                positions[security]['latest_date'] = latest_date
+                positions[security]['latest_date'] = latest_price.date
 
             # Prepare for converting currency in Price for the security to
-            # base_security 
+            # base_security
             if from_currency == self.base_currency:
                 exchange_rate = 1.0
             else:
@@ -224,7 +223,7 @@ class Account(models.Model):
             date = timezone.now()
         positions = {'$CASH': self.new_position()}
         #positions = {}
-        txns = Transaction.objects.prefetch_related('security').filter(
+        txns = Transaction.objects.select_related('security').filter(
             account=self, date__lte=date).order_by('date', 'id')
         for t in txns:
             if  t.security.name and t.security.name not  in positions:
