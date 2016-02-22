@@ -1,48 +1,80 @@
-'use strict';
+(function () {
+    'use strict';
 
-describe('Positions service', function () {
-    var $httpBackend, Positions, $rootScope;
+    describe('Positions service', function () {
+        var $httpBackend, Positions, $rootScope;
+        var googleQuoteTicker = 'WSR';
+        var positionJSON = 'positions_detail.json';
 
-    beforeEach(module('portfolio'));
+        beforeEach(module('portfolio'));
 
-    beforeEach(inject(function($controller, _$rootScope_, 
-                               _$httpBackend_, _Positions_) {
-        $httpBackend = _$httpBackend_;
-        Positions = _Positions_;
-        $rootScope = _$rootScope_;
-        jasmine.getJSONFixtures().fixturesPath='base/portfolio/static/tests/mock';
-        
-        $httpBackend.whenGET('/portfolio/api/v1/positions/1/')
-            .respond(getJSONFixture('positions_detail.json'));
-    }));
+        beforeEach(inject(function($controller, _$rootScope_,
+                                   _$httpBackend_, _Positions_) {
 
-    it('should have some results', function() {
-        var result;
-        Positions.all('1').then(function (data) {
-            result = data.data;
-            expect(result['Whitestone REIT'].price).toEqual(10.75);
-        }, function(data) {
-            console.log("Error", data);
+            /* Fixtures get cached. In case other tests are changing the
+               cache, remove  it.. and reload later
+            */
+            var fixtures = loadJSONFixtures(positionJSON);
+            delete fixtures[positionJSON];
+
+            $httpBackend = _$httpBackend_;
+            Positions = _Positions_;
+            $rootScope = _$rootScope_;
+
+            jasmine.getJSONFixtures().fixturesPath='base/portfolio/static/tests/mock';
+        }));
+
+        it('should get quote from Google', function() {
+            var response;
+
+            $httpBackend.expectJSONP('http://finance.google.com/finance/info?callback=JSON_CALLBACK&client=ig&q=' + googleQuoteTicker)
+                .respond(getJSONFixture('google_quote.json'));
+
+            Positions.google_quote(googleQuoteTicker).then(function(data){
+                response = data;
+            }, function(data) {
+                console.log('google_quote error ', data);
+            });
+            $httpBackend.flush();
+            expect(response[0]['t']).toEqual(googleQuoteTicker);
         });
 
-        $httpBackend.flush();
-    });
+        it('should have some results', function() {
+            var result;
 
-    it('should calculate market value correctly', function() {
+            $httpBackend.whenGET('/portfolio/api/v1/positions/1/')
+                .respond(getJSONFixture('positions_detail.json'));
 
-        var positions;
-        var mktval;
+            Positions.all('1').then(function (data) {
 
-        Positions.all('1').then(function (data) {
-            positions = data.data;
-        }, function(data) {
-            console.log("Error", data);
+                result = data.data;
+                expect(result['Whitestone REIT'].price).toEqual(10.75);
+            }, function(data) {
+                console.log("Error", data);
+            });
+
+            $httpBackend.flush();
         });
 
-        $httpBackend.flush();
+        it('should calculate market value correctly', function() {
 
-        mktval = Positions.market_value(positions);
-        expect(mktval).toBeCloseTo(18884.6, 2);
+            var positions;
+            var mktval;
 
+            $httpBackend.whenGET('/portfolio/api/v1/positions/1/')
+                .respond(getJSONFixture(positionJSON));
+
+            Positions.all('1').then(function (data) {
+                positions = data.data;
+            }, function(data) {
+                console.log("Error", data);
+            });
+
+            $httpBackend.flush();
+
+            mktval = Positions.market_value(positions);
+            expect(mktval).toBeCloseTo(18884.6, 2);
+
+        });
     });
-});
+})();
