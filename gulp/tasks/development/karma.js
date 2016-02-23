@@ -7,7 +7,7 @@ gulp.task('test', function(done) {
         singleRun: true,
         reporters: ['dots', 'junit', 'coverage'],
         junitReporter: {
-            outputDir: '',
+            outputDir: 'test_results',
             outputFile: 'test-results.xml'
         },
         preprosessors: {
