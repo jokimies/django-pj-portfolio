@@ -58,14 +58,12 @@
                 vm.securities = data.securities.data;
                 vm.accounts = data.accounts.data;
                 vm.currencies = data.currencies.data
-                console.log("promisesSuccessFn");
                 getLivePrices();
 
             }
 
             function promisesErrorFn(data, status, headers, config) {
-                console.log('promisesErrorFn')
-                console.log(data);
+                console.log('promisesErrorFn', data);
             }
         }
 
@@ -81,7 +79,6 @@
             for(i=0; i<vm.securities.length; i++) {
                 ticker = vm.securities[i].ticker;
                 vm.securities_d[ticker] = vm.securities[i].name;
-                console.log(ticker);
                 delay = Math.floor(Math.random()*(maxTime-minTime+1)+minTime);
 
                 /* call getQuoteForSecurity with 'ticker' argument */
@@ -89,7 +86,7 @@
                          delay);
             }
 
-            $timeout(function () {
+            vm.liveTimer = $timeout(function () {
                 getLivePrices();
             }, refreshRate*60*1000);
             
@@ -127,7 +124,6 @@
                         */
                         if ( typeof vm.positions[securityName] !== 'undefined' ) {
                             /* l is latest value */
-
                             vm.positions[securityName]['price'] = data[0]['l'];
                             vm.positions[securityName]['change'] = data[0]['c'];
                             vm.positions[securityName]['change_percentage'] = data[0]['cp'];
