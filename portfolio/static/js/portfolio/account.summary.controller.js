@@ -82,8 +82,8 @@
                 delay = Math.floor(Math.random()*(maxTime-minTime+1)+minTime);
 
                 /* call getQuoteForSecurity with 'ticker' argument */
-                $timeout(getQuoteForSecurity.bind(null, ticker),
-                         delay);
+                $timeout(getQuoteForSecurity, delay, true, ticker);
+
             }
 
             vm.liveTimer = $timeout(function () {
