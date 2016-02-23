@@ -20,7 +20,7 @@ describe('Securities service', function () {
         var result;
         Securities.all().then(function (data, status) {
             result = data.data;
-            expect(result[0].name).toEqual('Ahlstrom');
+            expect(result[0].name).toEqual('Nordea Bank');
         }, function(data) {
             console.log("Error", data);
         });
