@@ -104,6 +104,7 @@
 
                 var securityName;
                 var securityCurrency;
+                var ltDateSecs; /* latest transactrion date in seconds */
 
                 if (typeof vm.positions === 'undefined') {
                     /* It should be impossible to get here with
@@ -131,6 +132,10 @@
                             vm.positions[securityName]['price'] = data[0]['l'];
                             vm.positions[securityName]['change'] = data[0]['c'];
                             vm.positions[securityName]['change_percentage'] = data[0]['cp'];
+                            /* parse return milliseconds, second wanted */
+                            ltDateSecs = Date.parse(data[0]['lt_dts']) / 1000;
+                            vm.positions[securityName]['latest_date'] =
+                                moment.unix(ltDateSecs).format('YYYY-MM-DD');
                             /* convert currency unsed in security price
                                to base currency and used the converted
                                value as market value for the security in
