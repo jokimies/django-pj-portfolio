@@ -20,6 +20,10 @@
     function AccountSummaryController($timeout, $q, $location, Positions,
                                       Securities, Accounts, Currencies) {
         var vm = this;
+
+        vm.sortReverse = false;
+        vm.sortColumn = '$key';
+
         /* Get the account id from URL */
         var accountID = $location.path().split("/")[3];
 

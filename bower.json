@@ -22,6 +22,7 @@
   "dependencies": {
     "angular": "~1.4.9",
     "angular-resource": "~1.4.9",
-    "angular-mocks": "~1.4.9"
+    "angular-mocks": "~1.4.9",
+    "angular-toArrayFilter": "~1.0.1"
   }
 }

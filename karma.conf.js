@@ -18,6 +18,8 @@ module.exports = function(config) {
         'bower_components/angular/angular.js',
         'bower_components/angular-mocks/angular-mocks.js',
         'bower_components/angular-resource/angular-resource.js',
+        'bower_components/angular-toArrayFilter/toArrayFilter.js',
+
         'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
         /* need to  ensure module definitions (in *.module.js files are
            loaded first */

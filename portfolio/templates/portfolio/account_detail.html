@@ -25,37 +25,129 @@ Account
 
     <div class="tab-pane active" id="summary"
 	 ng-controller="AccountSummaryController as vm">
-	<table id="shareDetail" class="table table-bordered table-striped
-				       tablesorter" ng-cloak>
+	<table class="table table-bordered table-striped" ng-cloak>
 	    <thead>
 		<tr>
-		    <th>Security</th>
-		    <th class="nobreak">Last Price
+		    <th>
+			<div class="table-header">
+			    <div class="table-header-icon">
+				<a href="#" ng-click="vm.sortColumn='$key'; 
+					      vm.sortReverse = !vm.sortReverse">Security
+				</a>
+				<span class="table-icon fa fa-caret-down" 
+			      ng-show="vm.sortColumn == '$key' && !vm.sortReverse">
+				</span>
+				<span class="table-icon fa fa-caret-up" 
+			      ng-show="vm.sortColumn == '$key' && vm.sortReverse">
+				</span>
+			    </div>
+			</div>
+		    </th>
+		    <th class="table-header nobreak">Last Price
 		    <div>
-			<div class="nobreak t">Date</div>
+			<div class="table-header nobreak t">Date</div>
 		    </div>
 		    </th>
-		    <th>Change</th>
-		    <th>Average price </th>
-		    <th>Shares</th>
-		    <th>Mkt Value</th>
-		    <th>Weight </th> 
-		    <th>Overall return </th>
+		    <th>
+			<div class="table-header">
+			    Change
+			</div>
+		    </th>
+		    <th>
+			<div class="table-header">
+			    Average price 
+			</div>
+		    </th>
+		    <th>
+			<div class="table-header">
+			    <div class="table-header-icon">
+				<a href="#" ng-click="vm.sortColumn = 'shares';
+					      vm.sortReverse = !vm.sortReverse">Shares
+				</a>
+				<span class="table-icon fa fa-caret-up"
+					      ng-show="vm.sortColumn ==
+					      'shares' && 
+					      !vm.sortReverse">
+				</span>
+				<span class="table-icon fa fa-caret-down"
+				       ng-show="vm.sortColumn == 'shares' && 
+				       vm.sortReverse"> 
+				</span>
+			    </div>
+			</div>
+		    </th>
+		    <th>
+			<div class="table-header">
+			    <div class="table-header-icon">
+				<a href="#" ng-click="vm.sortColumn = 'mktval'; 
+					      vm.sortReverse =
+					      !vm.sortReverse"> Market Value 
+				</a>
+				<span class="table-icon fa fa-caret-up"
+					      ng-show="vm.sortColumn ==
+					      'mktval' && 
+					      !vm.sortReverse">
+				</span>
+				<span class="table-icon fa fa-caret-down"
+				       ng-show="vm.sortColumn == 'mktval' && 
+				       vm.sortReverse"> 
+				</span>
+			    </div>
+			</div>
+		    </th>
+		    <th>
+			<div class="table-header">
+			    <div class="table-header-icon">
+				<a href="#" ng-click="vm.sortColumn = 'folio_percentage'; 
+					      vm.sortReverse =
+					      !vm.sortReverse"> Weight
+				</a>
+				<span class="table-icon fa fa-caret-up"
+					      ng-show="vm.sortColumn ==
+					      'folio_percentage' && 
+					      !vm.sortReverse">
+				</span>
+				<span class="table-icon fa fa-caret-down"
+				       ng-show="vm.sortColumn ==
+				       'folio_percentage' && 
+				       vm.sortReverse"> 
+				</span>
+			    </div>
+			</div>
+		    </th> 
+		    <th>
+			<div class="table-header">
+			    <div class="table-header-icon">
+				<a href="#" ng-click="vm.sortColumn = 'total_return'; 
+					      vm.sortReverse =
+					      !vm.sortReverse">	Overall return 
+
+				</a>
+				<span class="table-icon fa fa-caret-up"
+				    ng-show="vm.sortColumn == 'total_return' &&
+				    !vm.sortReverse">
+				</span>
+				<span class="table-icon fa fa-caret-down"
+				    ng-show="vm.sortColumn == 'total_return' &&
+				    vm.sortReverse"> 
+				</span>
+			    </div>
+			</div>
+		    </th>
 		</tr>
 	    </thead>
 	    <tbody>
-		<tr ng-repeat="(security, data) in vm.positions"
-		    ng-if="data.shares >=1" >
+		<tr ng-repeat="data in vm.positions | toArray |
+			       orderBy:vm.sortColumn:vm.sortReverse"
+		    ng-if="data.$key != '$CASH' && data.shares >=1">
 		    <td> 
 			{% verbatim %}
-			{{ security }} 
+			{{ data.$key }}
 		    </td> 
 		    <td>
 			{{ data.price }}
-			<div>
-			    <div class="nobreak topborder"> 
-				{{ data.latest_date|date:"dd-MMM-yyyy"  }} 
-			    </div>
+			<div class="nobreak topborder"> 
+			    {{ data.latest_date|date:"dd-MMM-yyyy"  }} 
 			</div>
 		    </td>
 		    <td> 
@@ -64,14 +156,12 @@ Account
 			    'positive': data.change > 0 }">
 			    {{ data.change }}
 			</span>
-			<div>
-			    <div class="topborder">
-				<span ng-class="{ 
-				    'negative': data.change < 0, 
-				    'positive': data.change > 0 }">
-				    {{ data.change_percentage }} %
-				</span>
-			    </div>
+			<div class="topborder">
+			    <span ng-class="{ 
+				'negative': data.change < 0, 
+				'positive': data.change > 0 }">
+				{{ data.change_percentage }} %
+			    </span>
 			</div>
 		    </td>
 		    <td> {{ data.average|number:2 }} </td>

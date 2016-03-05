@@ -10,6 +10,7 @@
             'portfolio.account',
             'portfolio.currency',
             'portfolio.config',
+            'angular-toArrayFilter',
         ]);
 
     angular
