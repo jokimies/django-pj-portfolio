@@ -36,3 +36,10 @@ td span.negative {
 .table .table-header a {
     text-decoration: none;
 }
+
+.highlight-red {
+    background-color: red;
+}
+.highlight-green {
+    background-color: green;
+}

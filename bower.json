@@ -24,6 +24,7 @@
     "angular-resource": "~1.4.9",
     "angular-mocks": "~1.4.9",
     "angular-toArrayFilter": "~1.0.1",
-    "moment": "~2.11.2"
+    "moment": "~2.11.2",
+    "angular-animate": "~1.4.9"
   }
 }

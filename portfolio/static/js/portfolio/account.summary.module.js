@@ -2,6 +2,8 @@
     'use strict';
 
     angular
-        .module('portfolio.account.summary', []);
+        .module('portfolio.account.summary', [
+        'ngAnimate',
+        ]);
 })();
 

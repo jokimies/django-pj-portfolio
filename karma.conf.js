@@ -19,6 +19,7 @@ module.exports = function(config) {
         'bower_components/angular-mocks/angular-mocks.js',
         'bower_components/angular-resource/angular-resource.js',
         'bower_components/angular-toArrayFilter/toArrayFilter.js',
+        'bower_components/angular-animate/angular-animate.min.js',
         'bower_components/moment/min/moment.min.js',
         'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
         /* need to  ensure module definitions (in *.module.js files are
@@ -43,7 +44,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        '**/portfolio/static/js/**/*.js': 'coverage',
+        //'**/portfolio/static/js/**/*.js': 'coverage',
     },
 
 

@@ -150,7 +150,7 @@ Account
 			    {{ data.latest_date|date:"dd-MMM-yyyy"  }} 
 			</div>
 		    </td>
-		    <td> 
+		    <td highlight="data.change">
 			<span ng-class="{ 
 			    'negative': data.change < 0,
 			    'positive': data.change > 0 }">
@@ -179,7 +179,7 @@ Account
 		</tr>
 	    </tbody>
 	    {% verbatim %}
-	    <tbody class="tablesorter-no-sort">
+	    <tbody>
 		<tr>
 		    <th>Cash:</th>
 		    <td>&nbsp;</td>
@@ -196,7 +196,7 @@ Account
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
-		    <td>{{ vm.total_mktval|number:2 }}</td>
+		    <td highlight="vm.total_mktval">{{ vm.total_mktval|number:2 }}</td>
 		    <td>&nbsp;</td>
 		    <td>{{ vm.total_return|number:2 }} %</td>
 		</tr>
