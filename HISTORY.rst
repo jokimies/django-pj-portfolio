@@ -1,5 +1,60 @@
 .. :changelog:
 
+v1.1.1 (2016-03-06)
+-------------------
+
+New features
+~~~~~~~~~~~~
+
+- *summary detail*: Flash changed prices. [Petri Jokimies]
+
+
+
+
+Other
+~~~~~
+
+- *account summary*: Use latest date from Google Finance. [Petri
+  Jokimies]
+
+
+
+
+- *account summary*: Sort table using Angular's orderBy. [Petri
+  Jokimies]
+
+
+
+
+
+
+
+
+- *securities service*: Use smaller number of mocked results. [Petri
+  Jokimies]
+
+
+
+
+- *gulp*: Output results in separate directory. [Petri Jokimies]
+
+
+
+
+- *account summary*: $timeout parameters changed in 1.4.x. [Petri
+  Jokimies]
+
+
+
+
+
+
+- *account summary*: More tests. [Petri Jokimies]
+
+- *position service*: Test for google_quote. [Petri Jokimies]
+
+- *karma conf*: Run coverage. [Petri Jokimies]
+
 v1.1.0 (2016-02-16)
 -------------------
 
