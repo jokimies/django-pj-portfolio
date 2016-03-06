@@ -10,3 +10,6 @@ django-currency-history==0.1.1
 
 # Python 2.x & 3.x compatibility layer
 future==0.15.2
+
+# beatifulsoup for scraping data
+beautifulsoup4==4.4.0
