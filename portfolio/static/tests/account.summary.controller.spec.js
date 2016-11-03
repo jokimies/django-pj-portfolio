@@ -22,7 +22,8 @@
                 /* Mock the services */
                 deferreds.Positions = {
                     all: $q.defer(),
-                    google_quote: $q.defer()
+                    google_quote: $q.defer(),
+                    yahoo_quote: $q.defer(),
                 };
 
                 deferreds.Securities = {
@@ -45,7 +46,10 @@
                         .and.returnValue(deferreds.Positions.all.promise),
                     google_quote: jasmine.createSpy('Positions',
                                                     ['google_quote'])
-                        .and.returnValue(deferreds.Positions.google_quote.promise)
+                        .and.returnValue(deferreds.Positions.google_quote.promise),
+                    yahoo_quote: jasmine.createSpy('Positions',
+                                                    ['yahoo_quote'])
+                        .and.returnValue(deferreds.Positions.yahoo_quote.promise),
                 };
 
                 Securities = {

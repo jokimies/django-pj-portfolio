@@ -61,16 +61,14 @@
                 vm.positions = data.positions.data;
                 vm.securities = data.securities.data;
                 vm.accounts = data.accounts.data;
-                vm.currencies = data.currencies.data
+                vm.currencies = data.currencies.data;
                 getLivePrices();
-
             }
 
             function promisesErrorFn(data, status, headers, config) {
                 console.log('promisesErrorFn', data);
             }
         }
-
 
         function getLivePrices() {
                 
@@ -94,17 +92,85 @@
                 getLivePrices();
             }, refreshRate*60*1000);
             
-            function getQuoteForSecurity(ticker) {
-
-                Positions.google_quote(ticker)
-                    .then(positionsLiveSuccessFn, positionsLiveErrorFn);
+            function getQuoteForSecurity(ticker, provider) {
+                /* Stupid workaround for lack of default parameters ... */
+                provider  = (typeof provider !== 'undefined') ?  
+                        provider : 'yahoo';
+                /* Two possible providers for quote, Google and Yahoo */
+                switch(provider) {
+                    case 'yahoo':
+                    Positions.yahoo_quote(ticker)
+                        .then(positionsLiveSuccessYahooFn, 
+                              positionsLiveErrorYahooFn);
+                    break;
+                    case 'google':
+                    Positions.google_quote(ticker)
+                        .then(positionsLiveSuccessFn, positionsLiveErrorFn);
+                    break;
+                }
             }
                 
+            function positionsLiveSuccessYahooFn(data, status, headers, config) {
+
+                var result;
+                var ticker;
+                var currency;
+                var price;
+                var changePercentage;
+                var change;
+                var lastTrade;
+                
+                /* Yahoo returns 'null' as value for every field if we're
+                 * asking for quote for unknown ticker 
+                 * ... or it might not return 'results' at all
+                 * ... or eg. Change can be null if there're no transactions
+                 * for today
+                 */ 
+
+                if ( data.data.query.results !== null ) {
+                    result = data.data.query.results.quote;
+                    ticker = result.symbol;
+                    currency = result.Currency;
+                    price = result.LastTradePriceOnly;
+                    changePercentage = result.ChangeinPercent;
+                    change = result.Change;
+                    lastTrade = result.LastTradeDate;
+                }
+                if (  change === null || result === undefined ) {
+                    return;
+                }
+             
+                /* Strip off % character */
+                changePercentage = changePercentage.slice(0, -1);
+                
+                populateSecurityData(ticker, currency, price,
+                                     changePercentage, change,
+                                     lastTrade);
+            }
+
             function positionsLiveSuccessFn(data, status, headers, config) {
+
+                var result = data[0];
+                var ticker = result['t'];
+                var currency = result['l_cur'];
+                var price = result['lt_dts'];
+                var changePercentage = result['cp'];
+                var change = result['c'];
+                var lastTrade = result['lt_dts'];
+
+                populateSecurityData(ticker, currency, price,
+                                     changePercentage, change,
+                                     lastTrade);
+            }
+
+
+            function populateSecurityData(ticker, currency, price, 
+                                          changePercentage,
+                                          change, lastTrade) {
 
                 var securityName;
                 var securityCurrency;
-                var ltDateSecs; /* latest transactrion date in seconds */
+                var ltDateSecs;
 
                 if (typeof vm.positions === 'undefined') {
                     /* It should be impossible to get here with
@@ -112,16 +178,15 @@
                     ;
                 }
                 else {
-                    /* t represents ticker */
-                    if ( typeof data[0]['t'] !== 'undefined' ) {
-
-                        securityName = vm.securities_d[data[0]['t']];
-                        securityCurrency = getCurrency(data[0]['l_cur']);
+                    /* If ticker is not found, Yahoo returns null */
+                    if ( typeof ticker !== 'undefined' ||  ticker !== null) {
+                        securityName = vm.securities_d[ticker];
+                        securityCurrency = getCurrency(currency);
                         fx.base = vm.currencies['base'];
                         fx.rates = vm.currencies.rates;
-
+                        
                         /* 
-                           vm.positions has securities whise count is
+                           vm.positions has securities whose count is
                            greater than zero. However, Securities.all() 
                            service returns all securities in DB. Hence
                            it is possible that vm.positions[securityName]
@@ -129,15 +194,15 @@
                         */
                         if ( typeof vm.positions[securityName] !== 'undefined' ) {
                             /* l is latest value */
-                            vm.positions[securityName]['price'] = data[0]['l'];
-                            vm.positions[securityName]['change'] = data[0]['c'];
-                            vm.positions[securityName]['change_percentage'] = data[0]['cp'];
+                            vm.positions[securityName]['price'] = price;
+                            vm.positions[securityName]['change'] = change;
+                            vm.positions[securityName]['change_percentage'] = changePercentage;
                             /* parse return milliseconds, second wanted */
-                            ltDateSecs = Date.parse(data[0]['lt_dts']) / 1000;
+                            ltDateSecs = Date.parse(lastTrade) / 1000;
                             vm.positions[securityName]['latest_date'] =
                                 moment.unix(ltDateSecs).format('YYYY-MM-DD');
-                            /* convert currency unsed in security price
-                               to base currency and used the converted
+                            /* convert currency uned in security price
+                               to base currency and use the converted
                                value as market value for the security in
                                questinon 
                             */
@@ -155,7 +220,13 @@
                         }
                     }
                 }
+                
             }
+            function positionsLiveErrorYahooFn(data, status, headers, config) {
+                console.log(data);
+                console.log("Failed fetching data from Yahoo");
+            }
+
 
             function positionsLiveErrorFn(data) {
                 if (data.statusText === 'error') {

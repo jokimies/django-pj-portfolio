@@ -21,6 +21,7 @@
             all: all,
             google_quote: google_quote,
             market_value: market_value,
+            yahoo_quote: yahoo_quote,
         };
         
         return Positions;
@@ -35,7 +36,6 @@
 
         function google_quote(security) {
             var url = 'http://finance.google.com/finance/info?q=' + security;
-            console.log('url', url);
             var quote = $resource('http://finance.google.com/finance/info', 
                                      {client:'ig', callback:'JSON_CALLBACK'},
                                      {get: {method:'JSONP', params:{q:security}, 
@@ -54,6 +54,15 @@
                 }
             }
             return total;
+        }
+        
+        function yahoo_quote(security) {
+            var query = 'select * from yahoo.finance.quotes where symbol = "' + 
+                    security + '"';
+            var format = '&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback=JSON_CALLBACK';
+            var url = 'https://query.yahooapis.com/v1/public/yql?q=' +
+                    encodeURIComponent(query) + '%0A%09%09' + format;
+            return $http.jsonp(url);
         }
     }
 })();
