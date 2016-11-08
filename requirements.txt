@@ -5,7 +5,7 @@ django-pj-core
 djangorestframework
 django-app-namespace-template-loader
 # Currencies
-django-currency-history==0.1.1
+django-currency-history==0.2.3
 #mailer==0.8.1
 
 # Python 2.x & 3.x compatibility layer
