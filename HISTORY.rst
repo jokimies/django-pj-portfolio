@@ -1,5 +1,62 @@
 .. :changelog:
 
+v2.0.1 (2016-12-10)
+-------------------
+
+- Bump version. [Petri Jokimies]
+
+- Add migrations. [Petri Jokimies]
+
+
+
+
+- Remove Python 3.3 from travis configuration. [Petri Jokimies]
+
+v2.0.0 (2016-11-13)
+-------------------
+
+- Use Django 1.9.11. [Petri Jokimies]
+
+
+
+
+v1.2.2 (2016-11-13)
+-------------------
+
+- Bump version. [Petri Jokimies]
+
+- Update requirements for Python3. [Petri Jokimies]
+
+v1.2.1 (2016-11-08)
+-------------------
+
+- Bump version to 1.2.1. [Petri Jokimies]
+
+- Use newest version of django-currency-history. [Petri Jokimies]
+
+
+
+
+v1.2.0 (2016-11-03)
+-------------------
+
+Fix
+~~~
+
+- *requirements*: beatifulsoup added to requirements. [Petri Jokimies]
+
+Other
+~~~~~
+
+- Bump version 1.1.1 to 1.2.0. [Petri Jokimies]
+
+- Add possibility to get quotes from Yahoo Finance. [Petri Jokimies]
+
+
+
+
+
+
 v1.1.1 (2016-03-06)
 -------------------
 
