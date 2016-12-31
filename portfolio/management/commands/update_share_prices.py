@@ -73,8 +73,8 @@ class Command(BaseCommand):
         google_quote = json.loads(''.join([x for x in lines if x not in ('// [', ']')]), 'cp1252')
         quote = {}
         quote['price'] = google_quote['l']
-        quote['change'] = google_quote['c']
-        quote['change_percentage'] = google_quote['cp']
+        quote['change'] = google_quote['c'] or '0.0'
+        quote['change_percentage'] = google_quote['cp'] or '0.0'
         # Values from google finance can be in any currency, so far
         # handling only EUR and USD
         if '&#8364;' in google_quote['l_cur']:
