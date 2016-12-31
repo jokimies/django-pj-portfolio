@@ -22,14 +22,16 @@ from portfolio.forms import BuyForm, DepositWithdrawForm, InterestForm, DivForm,
 
 from portfolio.serializers import SecuritySerializer, AccountSerializer
 
-def decimal_default(obj):
-    """ json.dumps: convert decimal to float """
-    if isinstance(obj, Decimal):
-        return float(obj)
-    if isinstance(obj, datetime.datetime):
-        return obj.strftime ('%Y/%m/%d/%H/%M/%S') 
 
-    return json.JSONEncoder.default(self, obj)
+class CustomEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime ('%Y/%m/%d/%H/%M/%S')
+
+        super(CustomEncoder, self).default(obj)
+
 
 class PortfolioMixin(object):
 
@@ -172,14 +174,14 @@ class DividendChartByYearView(APIView):
     def get(self, request, *args, **kwargs):
         bymonth_select = {"month": """DATE_TRUNC('month', date)"""} # Postgres specific
         months = Transaction.objects.extra(select=bymonth_select).filter(action='DIV').filter(date__year=self.kwargs['year']).values('month').annotate(sum_month=Sum('cash_amount')).order_by('month')
-        div_data = {'months': range(1,13), 'sums': [0]*12}
+        div_data = {'months': list(range(1,13)), 'sums': [0]*12}
 
         for data in months:
             div_data['sums'][data['month'].month - 1] = data['sum_month']
 
         dataD = {}
         dataD['chart_data'] = div_data
-        result = json.dumps(dataD, default=decimal_default)
+        result = json.dumps(dataD, cls=CustomEncoder)
         
         response = Response(dataD, status=status.HTTP_200_OK) #, content_type='application/json')
 
