@@ -1,5 +1,42 @@
 .. :changelog:
 
+v2.0.2 (2016-12-31)
+-------------------
+
+New features
+~~~~~~~~~~~~
+
+- *bumpversion*: Configure bumpversion. [Petri Jokimies]
+
+Fix
+~~~
+
+- *management*: Set defaults to google quote. [Petri Jokimies]
+
+
+
+
+- *urls*: Change deprecated django.conf.urls.patterns. [Petri Jokimies]
+
+- *DividendByYear*: Fix JSON serialising. [Petri Jokimies]
+
+
+
+
+
+
+
+
+
+Other
+~~~~~
+
+- Bump version: 2.0.1 → 2.0.2. [Petri Jokimies]
+
+- Add pytest & bumpversion to requirements. [Petri Jokimies]
+
+- History update. [Petri Jokimies]
+
 v2.0.1 (2016-12-10)
 -------------------
 
