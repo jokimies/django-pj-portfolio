@@ -12,7 +12,7 @@ describe('Currency service', function() {
         $rootScope = _$rootScope_;
         jasmine.getJSONFixtures().fixturesPath='base/portfolio/static/tests/mock';
         $httpBackend
-            .whenJSONP('http://api.fixer.io/latest?callback=JSON_CALLBACK')
+            .whenGET('https://api.fixer.io/latest')
             .respond(getJSONFixture('currencies.json'));
     }));
 
@@ -27,7 +27,7 @@ describe('Currency service', function() {
        
         $httpBackend.flush();
 
-        expect(result['rates']['AUD']).toEqual(1.5624);
+        expect(result['rates']['USD']).toEqual(1.0589);
         
     });
 });

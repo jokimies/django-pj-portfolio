@@ -5,14 +5,14 @@
         .module('portfolio.currency')
         .factory('Currencies', Currencies);
 
-    Currencies.$input = ['$http'];
+    Currencies.$input = ['$http', '$sce'];
 
     /**
      * @
      * @desc
      */
 
-    function Currencies($http) {
+    function Currencies($http, $sce) {
         var Currencies = {
             all: all
         };
@@ -24,7 +24,9 @@
          * @name all
          */
         function all() {
-            return $http.jsonp('http://api.fixer.io/latest?callback=JSON_CALLBACK');
+            var url = 'https://api.fixer.io/latest';
+            $sce.trustAsResourceUrl(url);
+            return $http.get(url);
         }
     }
 })();
