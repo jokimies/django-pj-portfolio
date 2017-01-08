@@ -7,16 +7,17 @@ var developmentAssets = 'build/assets';
 var productionAssets  = 'build/production/assets';
 var srcVendors = 'static/assets/vendor/bower_components';
 var assets = 'portfolio/static';
+const djangoTemplates = 'portfolio/templates';
 
 module.exports = {
     browsersync: {
         development: {
             port: 8001,
-            proxy: 'lisa:8001',
+            proxy: 'homer:8001',
             files: [
                 assets + '/css/*.css',
                 assets + '/js/**/*.js',
-                'templates/**/*.html',
+                djangoTemplates + '/**/*.html',
             ],
             open: false,
         }
