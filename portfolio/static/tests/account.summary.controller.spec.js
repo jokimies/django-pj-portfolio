@@ -9,6 +9,44 @@
         var Positions, Securities, Accounts, Currencies;
         var vm;
 
+        function resolvePromises() {
+            /* Resolve the promises */
+
+            deferreds.Positions.all.resolve({
+                data: getJSONFixture('positions_detail.json')
+            });
+
+            deferreds.Securities.all.resolve({
+                data: getJSONFixture('securities.json')
+            });
+
+            deferreds.Accounts.all.resolve({
+                data: getJSONFixture('positions_detail.json')
+            });
+
+            deferreds.Currencies.all.resolve({
+                data: getJSONFixture('currencies.json')
+            });
+
+
+            deferreds.Positions.google_quote.resolve(
+                getJSONFixture('google_quote.json')
+            );
+
+            /* Promises are processed upon each digest cycle.
+               Do that now
+            */
+            $rootScope.$digest();
+
+            /* getLivePrices will call itself after timer has been expired.
+               Cancel that timer to prevent that from happening
+            */
+            $timeout.cancel(vm.liveTimer);
+
+            /* flush the timers */
+            $timeout.flush();
+        }
+
         beforeEach(function () {
             module('portfolio')
             inject(function($controller, _$rootScope_, _$q_, _$timeout_,
@@ -91,43 +129,36 @@
 
         it('should have Positions defined', function() {
 
-            /* Resolve the promises */
-
-            deferreds.Positions.all.resolve({
-                data: getJSONFixture('positions_detail.json')
-            });
-
-            deferreds.Securities.all.resolve({
-                data: getJSONFixture('securities.json')
-            });
-
-            deferreds.Accounts.all.resolve({
-                data: getJSONFixture('positions_detail.json')
-            });
-
-            deferreds.Currencies.all.resolve({
-                data: getJSONFixture('currencies.json')
-            });
-
-
-            deferreds.Positions.google_quote.resolve(
-                getJSONFixture('google_quote.json')
-            );
-
-            /* Promises are processed upon each digest cycle.
-               Do that now
-            */
-            $rootScope.$digest();
-
-            /* getLivePrices will call itself after timer has been expired.
-               Cancel that timer to prevent that from happening
-            */
-            $timeout.cancel(vm.liveTimer);
-
-            /* flush the timers */
-            $timeout.flush();
-
+            resolvePromises();
             expect(vm.positions['Whitestone REIT']['price']).toBeDefined();
+        });
+        
+        it('should calculate market value correctly', function() {
+            var usdRate = 1.054407
+
+            /* Initial values are for Elisa */
+            var price = 30.01;
+            var count = 972;
+            var expectedMarketValue;
+            
+            
+            resolvePromises();
+            /* Currency for Elisa is EUR, hence the market value need no
+               exchange rate correction */
+
+            expectedMarketValue = price * count;
+            expect(vm.positions['Elisa']['mktval'])
+                .toBeCloseTo(expectedMarketValue, 2);
+
+            /* WSR */
+            price = 14.0;
+            count = 1500;
+            
+            /* WSR is in USD, convert to EUR */
+            expectedMarketValue = price * count / usdRate;
+            expect(vm.positions['Whitestone REIT']['mktval'])
+                .toBeCloseTo(expectedMarketValue, 1); 
+
         });
     });
 })();

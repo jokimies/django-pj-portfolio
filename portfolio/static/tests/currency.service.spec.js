@@ -27,7 +27,7 @@ describe('Currency service', function() {
        
         $httpBackend.flush();
 
-        expect(result['rates']['USD']).toEqual(1.0589);
+        expect(result['rates']['USD']).toEqual(1.0540);
         
     });
 });

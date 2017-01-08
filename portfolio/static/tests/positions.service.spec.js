@@ -68,7 +68,7 @@
             Positions.all('1').then(function (data) {
 
                 result = data.data;
-                expect(result['Whitestone REIT'].price).toEqual(10.75);
+                expect(result['Whitestone REIT'].price).toEqual(14.0);
             }, function(data) {
                 console.log("Error", data);
             });
@@ -93,7 +93,8 @@
             $httpBackend.flush();
 
             mktval = Positions.market_value(positions);
-            expect(mktval).toBeCloseTo(18884.6, 2);
+            /* Value will be in 'native' currency, no conversion to EUR done */
+            expect(mktval).toBeCloseTo(49086.12, 2);
 
         });
     });

@@ -1,32 +1,32 @@
 {
-  "Nordea Bank": {
-    "latest_date": "2016-02-03",
-    "total_return": -19.95608832709022,
-    "basis": 10243.29,
-    "dividends": 274.13,
-    "sold": 3540,
-    "shares": 500,
-    "average": 11.72,
-    "mktval": 4385,
-    "gain": -2044.16,
-    "change_percentage": -2.34,
-    "folio_percentage": 2.60402232824537,
-    "price": 8.77,
-    "change": -0.21
-  },
-  "Whitestone REIT": {
-    "latest_date": "2016-02-03",
-    "total_return": -10.085563616711736,
-    "basis": 16736.0666488,
-    "dividends": 548.54,
-    "sold": 0,
-    "shares": 1500,
-    "average": 12.337943466666667,
-    "mktval": 14499.6,
-    "gain": -1687.9266488,
-    "change_percentage": -0.74,
-    "folio_percentage": 8.610554652366378,
-    "price": 10.75,
-    "change": -0.08
-  }
+    "Elisa": {
+        "average": 12.538611111111111,
+        "basis": 23779.53,
+        "change": 0.31,
+        "change_percentage": 1.04,
+        "dividends": 10963.93,
+        "folio_percentage": 11.46656659157563,
+        "gain": 41274.12,
+        "latest_date": "2016-12-11",
+        "mktval": 29169.72,
+        "price": 30.01,
+        "shares": 972.0,
+        "sold": 24920.0,
+        "total_return": 173.56995701765342
+    },
+    "Whitestone REIT": {
+        "average": 12.337943466666667,
+        "basis": 16736.0666488,
+        "change": -0.13,
+        "change_percentage": -0.92,
+        "dividends": 1746.45,
+        "folio_percentage": 7.829102468740079,
+        "gain": 4926.783351200001,
+        "latest_date": "2017-01-06",
+        "mktval": 19916.4,
+        "price": 14.0,
+        "shares": 1500.0,
+        "sold": 0,
+        "total_return": 29.438119807877666
+    }
 }

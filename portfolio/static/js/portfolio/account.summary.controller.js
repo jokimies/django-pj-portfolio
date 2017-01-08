@@ -158,11 +158,12 @@
                 var change = result['c'];
                 var lastTrade = result['lt_dts'];
 
+                /* Determine currency from Google's result */
+                currency = getCurrency(currency);
                 populateSecurityData(ticker, currency, price,
                                      changePercentage, change,
                                      lastTrade);
             }
-
 
             function populateSecurityData(ticker, currency, price, 
                                           changePercentage,
@@ -181,10 +182,9 @@
                     /* If ticker is not found, Yahoo returns null */
                     if ( typeof ticker !== 'undefined' ||  ticker !== null) {
                         securityName = vm.securities_d[ticker];
-                        securityCurrency = getCurrency(currency);
+                        securityCurrency = currency;
                         fx.base = vm.currencies['base'];
                         fx.rates = vm.currencies.rates;
-                        
                         /* 
                            vm.positions has securities whose count is
                            greater than zero. However, Securities.all() 
@@ -206,7 +206,6 @@
                                value as market value for the security in
                                questinon 
                             */
-
                             vm.positions[securityName]['mktval'] = 
                                 fx(vm.positions[securityName]['price'] * 
                                 vm.positions[securityName]['shares']) 
