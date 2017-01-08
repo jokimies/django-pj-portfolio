@@ -1,5 +1,49 @@
 .. :changelog:
 
+v2.0.3 (2017-01-08)
+-------------------
+
+Fix
+~~~
+
+- Don't load anglular-scripts in templates. [Petri Jokimies]
+
+
+
+
+
+
+
+
+
+- *summary*: Fix improperly detected currency. [Petri Jokimies]
+
+
+
+
+
+
+
+
+
+
+- Use plain get in retrieving exchange rates. [Petri Jokimies]
+
+
+
+
+
+
+Documentation
+~~~~~~~~~~~~~
+
+- *HISTORY*: Update HISTORY. [Petri Jokimies]
+
+Other
+~~~~~
+
+- Bump version: 2.0.2 → 2.0.3. [Petri Jokimies]
+
 v2.0.2 (2016-12-31)
 -------------------
 
