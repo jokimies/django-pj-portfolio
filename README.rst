@@ -58,10 +58,12 @@ Updates prices once per day (even if run multiple times a day, the first
 price only is taken in to account)
 
 
-Features
---------
+Dependencies
+------------
 
-* TODO
+Assumes `angular`, `angular-resource`, `angular-route` and
+`angular-cookies` to be loaded in the project
+
 
 Cookiecutter Tools Used in Making This Package
 ----------------------------------------------
