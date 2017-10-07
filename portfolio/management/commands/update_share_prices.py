@@ -6,6 +6,7 @@ from future.moves.urllib.request import urlopen
 from future.moves.urllib.error import HTTPError
 
 import json
+import requests
 from datetime import date
 import re
 
@@ -57,27 +58,38 @@ class Command(BaseCommand):
 
     def get_google_finance_stock_quote(self, ticker_symbol):
         """
-        http://stackoverflow.com/questions/18115997/unicodedecodeerror-utf8-codec-cant-decode-byte-euro-symbol for explanation for cp1252
         """
 
-        url = 'http://finance.google.com/finance/info?q=%s' % ticker_symbol
-        try:
-            # decode() for 2.x and 3.x compatibility (in 3.x the result
-            # without decode() is 'bytes', which neither the join below nor
-            # json_loads like
-            lines = urlopen(url).read().decode('utf-8').splitlines()
-        except HTTPError:
-            # For example, wrong/unknown ticker
+        url = 'https://finance.google.com/finance?output=json&q=%s' % ticker_symbol
+        response = requests.get(url)
+        if response.status_code == 200:
+            # This magic here is to cut out various leading characters from
+            # the JSON response, as well as trailing stuff (a terminating
+            # ']\n' sequence), and then we decode the escape sequences in
+            # the response This then allows you to load the resulting
+            # string with the JSON module.
+            try:
+                google_quote = json.loads(response.content[6:-2] \
+                                          .decode('unicode_escape'))
+            except ValueError:
+                # The response does not start with b'\n// [\n{...', so it is
+                # assumed that the query returned no matches, maybe something
+                # like
+                # b'\n{\n"start" : "",\n"num" : "",\n"num_company_results" :
+                # "0",\n"num_mf_results" : "0",\n"num_all_results" : 
+                # Return empty dictionary
+                return {}
+        else:
+            # Something else was returned as response code than 200
             return {}
 
-        google_quote = json.loads(''.join([x for x in lines if x not in ('// [', ']')]), 'cp1252')
         quote = {}
         quote['price'] = google_quote['l']
         quote['change'] = google_quote['c'] or '0.0'
         quote['change_percentage'] = google_quote['cp'] or '0.0'
-        # Values from google finance can be in any currency, so far
-        # handling only EUR and USD
-        if '&#8364;' in google_quote['l_cur']:
+
+        # Get the currency, all stocks in Helsinki are expected to be in euros
+        if google_quote['exchange'] == 'HEL':
             currency = Currency.objects.filter(
                 iso_code='EUR')[0]
         else:
