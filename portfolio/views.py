@@ -22,6 +22,7 @@ from portfolio.forms import BuyForm, DepositWithdrawForm, InterestForm, DivForm,
 
 from portfolio.serializers import SecuritySerializer, AccountSerializer
 
+from portfolio.management.commands.update_share_prices import Command
 
 class CustomEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -209,6 +210,29 @@ class PositionView(APIView):
         data = account.positions()
 
         return Response(data, status=status.HTTP_200_OK)
+
+
+class SecurityQuoteView(APIView):
+    '''Stock quotes from Google'''
+
+    def get(self, request, *args, **kwargs):
+        '''
+        Get stock quote from Google
+        '''
+
+        cmd = Command()
+        result = cmd.get_google_finance_stock_quote(kwargs['stock'])
+
+        if result:
+            # Google API, or response is missing date for latest price, add
+            # today as the date
+            date_today = datetime.datetime.today().strftime("%Y-%m-%d")
+            # Replace Currency object with its printable representation
+            result['currency'] = result['currency'].iso_code
+            result['ticker'] = kwargs['stock']
+            result['date'] = date_today
+
+        return Response(result, status=status.HTTP_200_OK)
 
 # Functions
 
