@@ -45,7 +45,7 @@
             var response;
             var query = 'select * from yahoo.finance.quotes where symbol = "' + 
                     yahooQuoteTicker + '"';
-            var format = '&format=json&diagnostics=true&env=http%3A%2F%2Fdatatables.org%2Falltables.env&callback=JSON_CALLBACK';
+            var format = '&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=JSON_CALLBACK';
             var url = 'https://query.yahooapis.com/v1/public/yql?q=' +
                     encodeURIComponent(query) + '%0A%09%09' + format;
 
