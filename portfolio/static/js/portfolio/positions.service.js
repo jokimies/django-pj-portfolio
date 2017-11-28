@@ -22,6 +22,7 @@
             google_quote: google_quote,
             market_value: market_value,
             yahoo_quote: yahoo_quote,
+            google_local_quote: google_local_quote
         };
         
         return Positions;
@@ -63,6 +64,17 @@
             var url = 'https://query.yahooapis.com/v1/public/yql?q=' +
                     encodeURIComponent(query) + '%0A%09%09' + format;
             return $http.jsonp(url);
+        }
+
+        /**
+         * Google quote using local backend as proxy to prevent
+         * No ‘Access-Control-Allow-Origin’ header is present on the
+         * requested resource. Origin ‘xxx’ is therefore not allowed
+         * access. Python's requests lib doesn't care if the header is
+         * there or not, browser does.
+         */
+        function google_local_quote(security) {
+            return $http.get('/portfolio/api/v1/' + security + '/quote/');
         }
     }
 })();

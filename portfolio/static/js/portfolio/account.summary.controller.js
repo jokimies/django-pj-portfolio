@@ -84,7 +84,7 @@
                 delay = Math.floor(Math.random()*(maxTime-minTime+1)+minTime);
 
                 /* call getQuoteForSecurity with 'ticker' argument */
-                $timeout(getQuoteForSecurity, delay, true, ticker);
+                $timeout(getQuoteForSecurity, delay, true, ticker, 'google-local');
 
             }
 
@@ -107,9 +107,35 @@
                     Positions.google_quote(ticker)
                         .then(positionsLiveSuccessFn, positionsLiveErrorFn);
                     break;
+                    case 'google-local':
+                    Positions.google_local_quote(ticker)
+                        .then(positionsLiveSuccessGoogleLocalFn,
+                              positionsLiveErrorGoogleLocalFn);
                 }
             }
-                
+
+            function positionsLiveSuccessGoogleLocalFn(data) {
+                if  (!data.data) {
+                    console.log("ei ollu");
+                }
+                console.log('GoogleLocal', data);
+                var result = data.data;
+                var ticker = result.ticker;
+                var currency = result.currency;
+                var price = result.price;
+                var changePercentage = result.change_percentage;
+                var change = result.change;
+                var lastTrade = result.date;
+
+                populateSecurityData(ticker, currency, price,
+                                     changePercentage, change,
+                                     lastTrade);
+            }
+
+            function positionsLiveErrorGoogleLocalFn(data) {
+                console.log('GoogleLocal Failed', data);
+            }
+
             function positionsLiveSuccessYahooFn(data, status, headers, config) {
 
                 var result;
@@ -126,7 +152,6 @@
                  * ... or eg. Change can be null if there're no transactions
                  * for today
                  */ 
-
                 if ( data.data.query.results !== null ) {
                     result = data.data.query.results.quote;
                     ticker = result.symbol;
