@@ -118,7 +118,7 @@
                 if  (!data.data) {
                     console.log("ei ollu");
                 }
-                console.log('GoogleLocal', data);
+
                 var result = data.data;
                 var ticker = result.ticker;
                 var currency = result.currency;
