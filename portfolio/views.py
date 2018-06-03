@@ -221,16 +221,12 @@ class SecurityQuoteView(APIView):
         '''
 
         cmd = Command()
-        result = cmd.get_google_finance_stock_quote(kwargs['stock'])
+        result = cmd.get_alpha_vantage_stock_quote(kwargs['stock'])
 
         if result:
-            # Google API, or response is missing date for latest price, add
-            # today as the date
-            date_today = datetime.datetime.today().strftime("%Y-%m-%d")
             # Replace Currency object with its printable representation
             result['currency'] = result['currency'].iso_code
             result['ticker'] = kwargs['stock']
-            result['date'] = date_today
 
         return Response(result, status=status.HTTP_200_OK)
 

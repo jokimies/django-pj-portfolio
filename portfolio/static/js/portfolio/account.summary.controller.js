@@ -72,19 +72,20 @@
 
         function getLivePrices() {
                 
-            var i, delay;
-            var minTime = 1000; // 1 sec
-            var maxTime = 4000; // 4 secs
-            var refreshRate = 10; // minutes
+            var i, delay, cumulative_delay = 0;
+            var minTime = 1800; // 1.8 sec
+            var maxTime = 2200; // 2.2 secs
+            var refreshRate = 15; // minutes
             var ticker;
 
             for(i=0; i<vm.securities.length; i++) {
                 ticker = vm.securities[i].ticker;
                 vm.securities_d[ticker] = vm.securities[i].name;
-                delay = Math.floor(Math.random()*(maxTime-minTime+1)+minTime);
-
+                delay = Math.random()*(maxTime-minTime+1)+minTime;
+                cumulative_delay += delay;
+                console.log(ticker, cumulative_delay, delay);
                 /* call getQuoteForSecurity with 'ticker' argument */
-                $timeout(getQuoteForSecurity, delay, true, ticker, 'google-local');
+                $timeout(getQuoteForSecurity, cumulative_delay, true, ticker, 'google-local');
 
             }
 
