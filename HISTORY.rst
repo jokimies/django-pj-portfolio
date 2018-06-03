@@ -1,5 +1,86 @@
 .. :changelog:
 
+v2.1.0 (2018-06-03)
+-------------------
+
+Fix
+~~~
+
+- *google*: Remove debug logging. [Petri Jokimies]
+
+Other
+~~~~~
+
+- Bump version: 2.0.6 → 2.1.0. [Petri Jokimies]
+
+- Use  AlphaVantatge as 'local' price provider. [Petri Jokimies]
+
+
+
+
+- Add AlphaVantage as a price tracker. [Petri Jokimies]
+
+v2.0.6 (2017-11-28)
+-------------------
+
+New features
+~~~~~~~~~~~~
+
+- *quote api*: Provide API for stock quotes. [Petri Jokimies]
+
+
+
+
+
+
+
+
+Fix
+~~~
+
+- *google*: Use local google finance proxy. [Petri Jokimies]
+
+Other
+~~~~~
+
+- Bump version: 2.0.5 → 2.0.6. [Petri Jokimies]
+
+- *google*: Change Yahoo url in test. [Petri Jokimies]
+
+
+
+
+v2.0.5 (2017-10-07)
+-------------------
+
+- Bump version: 2.0.4 → 2.0.5. [Petri Jokimies]
+
+- Change google url. [Petri Jokimies]
+
+
+
+
+
+
+
+v2.0.4 (2017-02-23)
+-------------------
+
+Documentation
+~~~~~~~~~~~~~
+
+- *HISTORY*: Update HISTORY. [Petri Jokimies]
+
+Other
+~~~~~
+
+- Bump version: 2.0.3 → 2.0.4. [Petri Jokimies]
+
+- Change Yahoo url. [Petri Jokimies]
+
+
+
+
 v2.0.3 (2017-01-08)
 -------------------
 
