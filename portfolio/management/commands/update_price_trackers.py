@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     def handle(self, **options):
 
-        trackers = ['Kauppalehti',  'GoogleFinance']
+        trackers = ['Kauppalehti',  'GoogleFinance', 'AlphaVantage' ]
 
         for tracker in trackers:
             if not PriceTracker.objects.filter(name=tracker):
