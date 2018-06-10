@@ -2,6 +2,8 @@ import json
 from decimal import Decimal
 import datetime
 import time
+import requests
+import sys
 
 from django.db.models import Sum
 
@@ -9,7 +11,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django.utils.decorators import method_decorator
-
+from django.core.exceptions import ImproperlyConfigured
+from django.conf import settings
 
 from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
@@ -230,6 +233,26 @@ class SecurityQuoteView(APIView):
 
         return Response(result, status=status.HTTP_200_OK)
 
+class ExchangeRatesView(APIView):
+    '''Get exchange rates'''
+
+    def get(self, request, *args, **kwargs):
+        API_KEY = getattr(settings, 'FIXER_IO_API_KEY', None)
+        if not API_KEY:
+            raise ImproperlyConfigured(
+                'FIXER_IO_API_KEY not set')
+        response = requests.get('http://data.fixer.io/api/latest?access_key=' +
+                                API_KEY)
+        try:
+            decoded_response = response.json()
+        except:
+            error = sys.exc_info()[0]
+            return Response({'error': error}, status=status.HTTP_400_BAD_REQUEST)
+        finally:
+            if response.status_code == status.HTTP_200_OK:
+                return Response(decoded_response, status=status.HTTP_200_OK)
+            else:
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
 # Functions
 
 

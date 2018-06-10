@@ -45,5 +45,7 @@ urlpatterns = [
     url(r'^api/v1/positions/(?P<account_id>\d+)/$', PositionView.as_view(),
         name='positions'),
     url(r'^api/v1/(?P<stock>.*)/quote/', SecurityQuoteView.as_view(),
-        name='security-quote')
+        name='security-quote'),
+    url(r'^api/v1/exchange/', ExchangeRatesView.as_view(),
+        name='exchange-rates'),
 ]

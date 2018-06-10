@@ -24,7 +24,7 @@
          * @name all
          */
         function all() {
-            var url = 'https://api.fixer.io/latest';
+            var url = '/portfolio/api/v1/exchange/';
             $sce.trustAsResourceUrl(url);
             return $http.get(url);
         }
