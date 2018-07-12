@@ -98,6 +98,26 @@ Account
 		    <th>
 			<div class="table-header">
 			    <div class="table-header-icon">
+				<a href="#" ng-click="vm.sortColumn = 'day_change'; 
+					      vm.sortReverse =
+					      !vm.sortReverse"> Day change
+				</a>
+				<span class="table-icon fa fa-caret-up"
+					      ng-show="vm.sortColumn ==
+					      'day_change' &&
+					      !vm.sortReverse">
+				</span>
+				<span class="table-icon fa fa-caret-down"
+				       ng-show="vm.sortColumn ==
+				       'day_change' &&
+				       vm.sortReverse">
+				</span>
+			    </div>
+			</div>
+		    </th>
+		    <th>
+			<div class="table-header">
+			    <div class="table-header-icon">
 				<a href="#" ng-click="vm.sortColumn = 'folio_percentage'; 
 					      vm.sortReverse =
 					      !vm.sortReverse"> Weight
@@ -120,7 +140,7 @@ Account
 			    <div class="table-header-icon">
 				<a href="#" ng-click="vm.sortColumn = 'total_return'; 
 					      vm.sortReverse =
-					      !vm.sortReverse">	Overall return 
+					      !vm.sortReverse">	Overall return
 
 				</a>
 				<span class="table-icon fa fa-caret-up"
@@ -167,7 +187,15 @@ Account
 		    <td> {{ data.average|number:2 }} </td>
 		    <td> {{ data.shares }} </td>
 		    <td> {{ data.mktval|number:2 }} </td>
-		    <td> {{ data.folio_percentage|number:2  }} </td>
+		    <td>
+			<span ng-class="{
+					'negative': data.day_change < 0,
+					'positive': data.day_change > 0
+					}">
+			    {{ data.day_change| number:2 }}
+			</span>
+		    </td>
+		    <td> {{ data.folio_percentage|number:2 }} </td>
 		    <td>
 			<span ng-class="{ 
 			    'negative': data.total_return < 0,
@@ -197,7 +225,13 @@ Account
 		    <td>&nbsp;</td>
 		    <td>&nbsp;</td>
 		    <td highlight="vm.total_mktval">{{ vm.total_mktval|number:2 }}</td>
-		    <td>&nbsp;</td>
+		    <td>
+			<span ng-class="{
+			    'negative': vm.total_day_change < 0,
+			    'positive': vm.total_day_change > 0 }">
+			    {{ vm.total_day_change | number: 2 }}
+			</span>
+		    </td>
 		    <td>{{ vm.total_return|number:2 }} %</td>
 		</tr>
 	    </tbody>

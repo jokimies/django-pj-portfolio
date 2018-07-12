@@ -41,6 +41,7 @@
         vm.securities_d = {};
 
         vm.total_mktval = 0;
+        vm.total_day_change = 0;
 
         activate();
 
@@ -236,10 +237,19 @@
                                 fx(vm.positions[securityName]['price'] * 
                                 vm.positions[securityName]['shares']) 
                                 .from(securityCurrency).to(fx.base);
+                            vm.positions[securityName]['day_change'] =
+                                vm.positions[securityName]['shares'] *
+                                vm.positions[securityName]['change'];
                             vm.total_mktval = 0;
+                            vm.total_day_change = 0;
                             for (var position in vm.positions) {
                                 if (vm.positions.hasOwnProperty(position)) {
                                     vm.total_mktval += vm.positions[position]['mktval'];
+                                    if (typeof vm.positions[position]['day_change'] !== 'undefined') {
+                                        vm.total_day_change += vm.positions[position]['day_change'];
+                                        console.log(vm.positions[position]);
+                                        console.log(vm.positions[position]['day_change']);
+                                    }
                                 }
                             }
                         }
