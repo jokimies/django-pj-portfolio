@@ -74,13 +74,16 @@
         function getLivePrices() {
                 
             var i, delay, cumulative_delay = 0;
-            var minTime = 1800; // 1.8 sec
-            var maxTime = 2200; // 2.2 secs
+            var minTime = 25000; // 25 sec
+            var maxTime = 30000; // 30 secs
             var refreshRate = 15; // minutes
             var ticker;
 
             for(i=0; i<vm.securities.length; i++) {
                 ticker = vm.securities[i].ticker;
+                if ( ticker === 'N/A' ) {
+                    continue;
+                }
                 vm.securities_d[ticker] = vm.securities[i].name;
                 delay = Math.random()*(maxTime-minTime+1)+minTime;
                 cumulative_delay += delay;
