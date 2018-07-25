@@ -16,6 +16,7 @@ import logging
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.core.cache import cache
 
 from currency_history.models import Currency
 
@@ -92,9 +93,12 @@ class Command(BaseCommand):
         if not API_KEY:
             raise ImproperlyConfigured(
                 'ALPHA_VANTAGE_API_KEY not set')
-
+        logger.debug('Ticker {}'.format(ticker_symbol))
         if ticker_symbol == 'N/A':
             return {}
+
+        # Check if ticker recently requested
+        cached = cache.get(ticker_symbol)
 
         url = 'https://www.alphavantage.co/query?' \
               'function=TIME_SERIES_DAILY&symbol=' + ticker_symbol + \
@@ -104,10 +108,20 @@ class Command(BaseCommand):
 
         close_value = '4. close'
 
-        response = requests.get(url)
-
-        alpha_quote = json.loads(response.content.decode('unicode_escape'),
+        if not cached:
+            response = requests.get(url)
+            alpha_quote = json.loads(response.content.decode('unicode_escape'),
                                  object_pairs_hook=OrderedDict)
+            # If request did return proper quote data, alpha_quote has key
+            # name time_series. In that case, cache the result
+            if time_series in alpha_quote:
+                logger.debug('Caching {}'.format(ticker_symbol))
+                # AlphaVantage has limited requests rate per minute, cache
+                # results to avoid hitting AV servers too often.
+                cache.set(ticker_symbol, alpha_quote)
+        else:
+            alpha_quote = cached
+            logger.debug('Already cached {}'.format(ticker_symbol))
         try:
             time_series = alpha_quote[time_series]
         except KeyError:
