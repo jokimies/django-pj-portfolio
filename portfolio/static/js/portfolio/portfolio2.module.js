@@ -3,6 +3,7 @@
 
     angular
         .module('portfolio', [
+            'ngRoute',
             'portfolio.account.summary',
             'portfolio.positions',
             'portfolio.securities',
