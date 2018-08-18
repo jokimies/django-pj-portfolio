@@ -243,6 +243,12 @@
                             vm.positions[securityName]['day_change'] =
                                 vm.positions[securityName]['shares'] *
                                 vm.positions[securityName]['change'];
+                            if (typeof vm.positions[securityName]['day_change'] !== 'undefined') {
+                                vm.positions[securityName]['day_change'] =
+                                    fx(vm.positions[securityName]['day_change'])
+                                    .from(securityCurrency)
+                                    .to(fx.base);
+                            }
                             vm.total_mktval = 0;
                             vm.total_day_change = 0;
                             for (var position in vm.positions) {
