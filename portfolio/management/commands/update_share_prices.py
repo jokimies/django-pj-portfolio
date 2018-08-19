@@ -8,6 +8,7 @@ from future.moves.urllib.error import HTTPError
 import json
 import requests
 from datetime import date
+import time
 import re
 from collections import OrderedDict
 import logging
@@ -41,14 +42,16 @@ class Command(BaseCommand):
             elif security.price_tracker.name == 'GoogleFinance':
                 quote = self.get_google_finance_stock_quote(security.ticker)
             elif security.price_tracker.name == 'AlphaVantage':
-                quote = self.get_alpha_vantage_stock_quote(security.ticker)
+                AV_DELAY = getattr(settings, "ALPHA_VANTAGE_DELAY", 30)
+                quote = self.get_alpha_vantage_stock_quote(security.ticker,
+                                                           AV_DELAY)
             else:
                 raise ImproperlyConfigured(
                     'Unkown price tracker {}'.format(
                         security.price_tracker.name))
 
             if not quote.get('price'):
-                print('No ticker {} found by {}'.format(
+                logger.debug('No ticker {} found by {}'.format(
                     security.ticker, security.price_tracker.name))
                 continue
             # Check if there already is price for today
@@ -63,7 +66,7 @@ class Command(BaseCommand):
                                      change=quote['change'],
                                      change_percentage=quote['change_percentage'])
 
-    def get_alpha_vantage_stock_quote(self, ticker_symbol):
+    def get_alpha_vantage_stock_quote(self, ticker_symbol, delay=None):
         """
         "Meta Data": {
         "1. Information": "Daily Prices (open, high, low, close) and Volumes",
@@ -109,6 +112,11 @@ class Command(BaseCommand):
         close_value = '4. close'
 
         if not cached:
+            # Alpha Vantage don't want too many requests pre minute
+            # (effectively only two at the moment
+            if delay:
+                time.sleep(delay)
+
             response = requests.get(url)
             alpha_quote = json.loads(response.content.decode('unicode_escape'),
                                  object_pairs_hook=OrderedDict)
