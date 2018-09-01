@@ -54,17 +54,14 @@ class Command(BaseCommand):
                 logger.debug('No ticker {} found by {}'.format(
                     security.ticker, security.price_tracker.name))
                 continue
-            # Check if there already is price for today
-            try:
-                Price.objects.filter(
-                    security=security, date=today).latest('date')
-            except Price.DoesNotExist:
-
-                Price.objects.create(date=today, security=security,
-                                     price=quote['price'],
-                                     currency=quote['currency'],
-                                     change=quote['change'],
-                                     change_percentage=quote['change_percentage'])
+            # Update price
+            Price.objects.update_or_create(date=today,
+                                           security=security,
+                                           defaults={
+                                               'price': quote['price'],
+                                               'currency': quote['currency'],
+                                               'change': quote['change'],
+                                               'change_percentage': quote['change_percentage']})
 
     def get_alpha_vantage_stock_quote(self, ticker_symbol, delay=None):
         """
