@@ -32,7 +32,14 @@ class Command(BaseCommand):
 
     soup = None
 
-    def handle(self, **options):
+    def add_arguments(self, parser):
+
+        # Wait time between subsequent stock API calls
+        parser.add_argument('-w', '--wait',
+                            help='Time to wait between API calls',
+                            dest='api_wait_time')
+
+    def handle(self, *args, **options):
         securities = Security.objects.all()
         today = date.today()
 
@@ -43,6 +50,11 @@ class Command(BaseCommand):
                 quote = self.get_google_finance_stock_quote(security.ticker)
             elif security.price_tracker.name == 'AlphaVantage':
                 AV_DELAY = getattr(settings, "ALPHA_VANTAGE_DELAY", 30)
+                # If -w/--wait was given, use that value instead of settings
+                if options['api_wait_time']:
+                    logger.debug('api_wait_time {}'
+                                 .format(options['api_wait_time']))
+                    AV_DELAY = int(options['api_wait_time'])
                 quote = self.get_alpha_vantage_stock_quote(security.ticker,
                                                            AV_DELAY)
             else:
@@ -112,6 +124,7 @@ class Command(BaseCommand):
             # Alpha Vantage don't want too many requests pre minute
             # (effectively only two at the moment
             if delay:
+                logger.debug('AV delay {}'.format(delay))
                 time.sleep(delay)
 
             response = requests.get(url)
