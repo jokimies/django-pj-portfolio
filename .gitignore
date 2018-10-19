@@ -43,3 +43,8 @@ output/*/index.html
 docs/_build
 /coverage.xml
 /PhantomJS_1.9.8_(Linux_0.0.0)/
+/node_modules/
+/bower_components/
+/test_results/
+/htmlcov/
+/coverage/
