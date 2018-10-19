@@ -15,10 +15,11 @@
     AccountSummaryController.$inject = [ '$timeout', '$q', '$location',
                                          'Positions',
                                          'Securities', 'Accounts',
-                                         'Currencies'];
+                                         'Currencies', 'portfolioConfig'];
 
     function AccountSummaryController($timeout, $q, $location, Positions,
-                                      Securities, Accounts, Currencies) {
+                                      Securities, Accounts, Currencies,
+                                      portfolioConfig) {
         var vm = this;
 
         vm.sortReverse = false;
@@ -74,8 +75,8 @@
         function getLivePrices() {
                 
             var i, delay, cumulative_delay = 0;
-            var minTime = 25000; // 25 sec
-            var maxTime = 30000; // 30 secs
+            var minTime = portfolioConfig.APIMinWaitTime;
+            var maxTime = portfolioConfig.APIMinWaitTime;
             var refreshRate = 15; // minutes
             var ticker;
 
@@ -249,13 +250,16 @@
                                     .from(securityCurrency)
                                     .to(fx.base);
                             }
+                            // Update market value & daily change
                             vm.total_mktval = 0;
                             vm.total_day_change = 0;
                             for (var position in vm.positions) {
                                 if (vm.positions.hasOwnProperty(position)) {
-                                    vm.total_mktval += vm.positions[position]['mktval'];
+                                    vm.total_mktval += 
+                                        vm.positions[position]['mktval'];
                                     if (typeof vm.positions[position]['day_change'] !== 'undefined') {
-                                        vm.total_day_change += vm.positions[position]['day_change'];
+                                        vm.total_day_change += 
+                                            vm.positions[position]['day_change'];
                                         console.log(vm.positions[position]);
                                         console.log(vm.positions[position]['day_change']);
                                     }
@@ -277,7 +281,7 @@
                     console.log('LiveError: Ketuiksi meni', data);
                 }
                 else {
-                    console.log('LiveError', data)
+                    console.log('LiveError', data);
                 }
             }
  
