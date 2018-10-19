@@ -12,7 +12,7 @@ describe('Currency service', function() {
         $rootScope = _$rootScope_;
         jasmine.getJSONFixtures().fixturesPath='base/portfolio/static/tests/mock';
         $httpBackend
-            .whenGET('https://api.fixer.io/latest')
+            .whenGET('/portfolio/api/v1/exchange/')
             .respond(getJSONFixture('currencies.json'));
     }));
 
