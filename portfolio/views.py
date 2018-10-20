@@ -210,7 +210,7 @@ class PositionView(APIView):
 
         account = get_object_or_404(Account, pk=kwargs['account_id'])
 
-        data = account.positions()
+        data = account.get_positions()
 
         return Response(data, status=status.HTTP_200_OK)
 

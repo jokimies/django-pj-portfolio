@@ -12,6 +12,7 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from currency_history.models import Currency, CurrencyRate
 
+import time
 
 class DivManager(models.Manager):
     """Dividends manager to return all the years dividends have been received
@@ -47,6 +48,10 @@ class Account(models.Model):
     # to be added back
     objects = models.Manager()
 
+
+    def __init__(self, *args, **kwargs):
+        models.Model.__init__(self, *args, **kwargs)
+        self.positions = {'$CASH': self.new_position() }
 
     def buySellSecurity(self, security=None, shares=None, date=None,
                         price=None, commission=0, action=None, currency=None,
@@ -207,7 +212,7 @@ class Account(models.Model):
             positions[security]['folio_percentage'] = (p['mktval'] / folio_mktval ) * 100
         return positions
 
-    def positions(self, date=None):
+    def get_positions(self, date=None):
         """Return a dictionary of all of the positions in this account.
 
         If date is provided, then only include transactions up to (and
@@ -223,9 +228,9 @@ class Account(models.Model):
             date = timezone.now()
         positions = {'$CASH': self.new_position()}
         #positions = {}
-        txns = Transaction.objects.select_related('security').filter(
+        transactions = Transaction.objects.select_related('security').filter(
             account=self, date__lte=date).order_by('date', 'id')
-        for t in txns:
+        for t in transactions:
             if  t.security.name and t.security.name not  in positions:
                 positions[t.security.name] = self.new_position()
             # switch based on transaction action
