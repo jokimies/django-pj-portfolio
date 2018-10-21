@@ -28,6 +28,7 @@ class UpdatePrices(TestCase):
         self.tracker_kl, created = PriceTracker.objects.get_or_create(
             name='Kauppalehti')
         self.tracker_google = PriceTrackerFactory(name='GoogleFinance')
+        self.tracker_av = PriceTrackerFactory(name='AlphaVantage')
         self.security = SecurityFactory(name='Elisa', ticker='ELI1V', 
                                    price_tracker=self.tracker_kl)
         self.currency = CurrencyFactory(iso_code='EUR')
@@ -43,18 +44,19 @@ class UpdatePrices(TestCase):
         """
 
         call_command('update_price_trackers')
-        self.assertEqual(PriceTracker.objects.count(), 2)
+        self.assertEqual(PriceTracker.objects.count(), 3)
 
     def test_update_trackers_stores_trackers(self):
 
         # First delete trackers created in setUp():
         self.tracker_kl.delete()
         self.tracker_google.delete()
+        self.tracker_av.delete()
         self.assertEqual(PriceTracker.objects.count(),0)
 
         # Then create those again
         call_command('update_price_trackers')
-        self.assertEqual(PriceTracker.objects.count(), 2)
+        self.assertEqual(PriceTracker.objects.count(), 3)
         
     def test_price_is_stored_only_once_per_day(self):
         
