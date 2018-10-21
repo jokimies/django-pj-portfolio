@@ -29,9 +29,9 @@
             });
 
 
-            deferreds.Positions.google_quote.resolve(
-                getJSONFixture('google_quote.json')
-            );
+            deferreds.Positions.google_local_quote.resolve({
+                data: getJSONFixture('google_quote.json')
+            });
 
             /* Promises are processed upon each digest cycle.
                Do that now
@@ -62,6 +62,7 @@
                     all: $q.defer(),
                     google_quote: $q.defer(),
                     yahoo_quote: $q.defer(),
+                    google_local_quote: $q.defer()
                 };
 
                 deferreds.Securities = {
@@ -90,9 +91,9 @@
                         .and.returnValue(
                             deferreds.Positions.yahoo_quote.promise),
                     google_local_quote: jasmine.createSpy('Positions',
-                                                    ['google_quote'])
+                                                    ['google_local_quote'])
                         .and.returnValue(
-                            deferreds.Positions.google_quote.promise)
+                            deferreds.Positions.google_local_quote.promise)
                 };
 
                 Securities = {

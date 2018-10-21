@@ -21,6 +21,8 @@ module.exports = function(config) {
         'bower_components/angular-toArrayFilter/toArrayFilter.js',
         'bower_components/angular-animate/angular-animate.min.js',
         'bower_components/moment/min/moment.min.js',
+        'bower_components/angular-route/angular-route.min.js',
+        'bower_components/ng-dialog/js/ngDialog.min.js',
         'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
         /* need to  ensure module definitions (in *.module.js files are
            loaded first */
