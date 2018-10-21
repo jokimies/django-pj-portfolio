@@ -54,7 +54,7 @@ class AccountModelTest(AccountBase, TestCase):
     def test_deposit(self):
         self.account.deposit(cash_amount=1000.12, date=timezone.now(),
                              security=self.security_cash, currency=self.currency_eur)
-        positions = self.account.positions()
+        positions = self.account.get_positions()
         self.assertEquals(positions['$CASH']['shares'], Decimal('1000.12'))
         
     def test_withdraw(self):
@@ -63,7 +63,7 @@ class AccountModelTest(AccountBase, TestCase):
 
         self.account.withdraw(cash_amount=90, date=timezone.now(),
                               security=self.security, currency=self.currency_eur)
-        positions = self.account.positions()
+        positions = self.account.get_positions()
         # 'Converting' 1000.12 - 90 to contain 2 decimals 
         #self.assertEquals(positions['$CASH']['shares'], Decimal('%.2f' % (1000.12 - 90)))
 
@@ -81,7 +81,7 @@ class AccountModelTest(AccountBase, TestCase):
                                      commission=commission, action='BUY',
                                      currency=self.currency_eur,
                                      exchange_rate=exchange_rate)
-        positions = self.account.positions()
+        positions = self.account.get_positions()
         # Should be as many in possession as bought above
         self.assertEquals(positions[self.security.name]['shares'], security_amount)
         # How much there's cash?
@@ -133,7 +133,7 @@ class AccountModelTest(AccountBase, TestCase):
                                      currency=self.currency_eur,
                                      exchange_rate=exchange_rate)
 
-        positions = self.account.positions()
+        positions = self.account.get_positions()
         # Should be as many in possession as bought above
         self.assertEquals(positions[self.security.name]['shares'], total_buy_amount)
         # And the cash?
@@ -180,7 +180,7 @@ class AccountModelTest(AccountBase, TestCase):
                                      currency=self.currency_eur,
                                      exchange_rate=exchange_rate)
         
-        positions = self.account.positions()
+        positions = self.account.get_positions()
 
         # Corrent amount of shares left?
         self.assertEquals(positions[self.security.name]['shares'],
@@ -208,7 +208,7 @@ class AccountModelTest(AccountBase, TestCase):
                          cash_amount=dividend_sum, date=timezone.now(), 
                          currency=self.currency_eur, exchange_rate=1)
 
-        positions = self.account.positions()
+        positions = self.account.get_positions()
         # How much do we have
         self.assertEquals(positions['$CASH']['shares'], 
                           Decimal('%.2f' % dividend_sum))
@@ -244,7 +244,7 @@ class AccountModelTest(AccountBase, TestCase):
 
     def test_market_value_no_securities_is_bought(self):
         
-        positions = self.account.positions()
+        positions = self.account.get_positions()
         self.account.mktval()
 
     def test_overall_return(self):
