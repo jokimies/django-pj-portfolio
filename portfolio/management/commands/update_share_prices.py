@@ -7,7 +7,7 @@ from future.moves.urllib.error import HTTPError
 
 import json
 import requests
-from datetime import date
+from datetime import date, datetime
 import time
 import re
 from collections import OrderedDict
@@ -57,6 +57,8 @@ class Command(BaseCommand):
                     AV_DELAY = int(options['api_wait_time'])
                 quote = self.get_alpha_vantage_stock_quote(security.ticker,
                                                            AV_DELAY)
+            elif security.price_tracker.name == 'Yahoo':
+                quote = self.get_yahoo_stock_quote(security.cker)
             else:
                 raise ImproperlyConfigured(
                     'Unkown price tracker {}'.format(
@@ -74,6 +76,80 @@ class Command(BaseCommand):
                                                'currency': quote['currency'],
                                                'change': quote['change'],
                                                'change_percentage': quote['change_percentage']})
+
+    def get_yahoo_stock_quote(self, ticker_symbol):
+        """
+        For resulting JSON,see eg.
+        https://query1.finance.yahoo.com/v7/finance/chart/ASPO.HE?&interval=15m
+        on browser
+        """
+        logger.debug('Ticker {}, using Yahoo'.format(ticker_symbol))
+        if ticker_symbol == 'N/A':
+            return {}
+
+        url = 'https://query1.finance.yahoo.com/v7/finance/chart/' + \
+              ticker_symbol + '?&interval=15m'
+        response = requests.get(url)
+        yahoo_quote = json.loads(response.content.decode('unicode_escape'),
+                                 object_pairs_hook=OrderedDict)
+        quote_data = yahoo_quote['chart']['result'][0]
+        quote_meta = quote_data['meta']
+
+        # Previous day close
+        previous_close = quote_meta['previousClose']
+
+        # lastest value, so far today
+        latest_date_stamp = quote_data['timestamp'][-1]
+        latest_date = datetime.fromtimestamp(
+            latest_date_stamp).strftime(
+                '%Y-%m-%d')
+
+        # Finding out the latest price, timestamp appreast to be related to
+        # quote value, and if no transactions has happened during timestamp
+        # (or timestamp perido, determined by url), quote value appears to
+        # be None
+        quote_period = quote_data['indicators']['quote'][0]
+        # Loop from end, until first non None value is found
+        current_index = len(quote_period['close']) -1
+        latest_price = None
+        while current_index >= 0:
+            if quote_period['close'][current_index] != None:
+                latest_price = quote_period['close'][current_index]
+                break
+            else:
+                current_index -= 1
+        # If all the values were none, apparently no transactions during
+        # the period, assuming chartPreviousClose is the latest transaction
+        if latest_price == None:
+            latest_price = quote_meta['previousChartClose']
+
+        change = '{:.3}'.format(latest_price - previous_close)
+        change_percentage = '{:.3}'.format(
+            (latest_price - previous_close ) / previous_close * 100
+        )
+
+        print(latest_price)
+        period_close = quote_period['close'][-1]
+        print(period_close)
+
+        quote = {}
+        quote['price'] = '{:.2f}'.format(latest_price)
+        quote['change'] = change
+        quote['change_percentage'] = change_percentage
+        quote['date'] = latest_date
+
+        exhange = quote_meta['exchangeName']
+        if exhange == 'HE':
+            currency = Currency.objects.filter(
+                iso_code='EUR')[0]
+        else:
+            # exhange something else that Helsinki, assume USD values
+            currency = Currency.objects.filter(
+                iso_code='USD')[0]
+
+        quote['currency'] = currency
+
+        return quote
 
     def get_alpha_vantage_stock_quote(self, ticker_symbol, delay=None):
         """

@@ -49,6 +49,7 @@ class PortfolioMixin(object):
         #print ctx
         return ctx
 
+
 class TransactionListView(ListView):
     model = Transaction
 
@@ -216,22 +217,36 @@ class PositionView(APIView):
 
 
 class SecurityQuoteView(APIView):
-    '''Stock quotes from Google'''
+    '''Stock quotes from defined provider'''
 
     def get(self, request, *args, **kwargs):
         '''
-        Get stock quote from Google
+        Get stock quote from defined provider
         '''
 
+        ticker = kwargs['stock']
+        try:
+            security = Security.objects.filter(ticker = ticker)[:1].get()
+        except Security.DoesNotExist:
+            # Wanted ticker did not exists
+            return Response({}, status=status.HTTP_200_OK)
+
         cmd = Command()
-        result = cmd.get_alpha_vantage_stock_quote(kwargs['stock'])
+
+        # Find out price tracker and fetch quote from it
+        if (security.price_tracker.name == 'Yahoo'):
+            result = cmd.get_yahoo_stock_quote(ticker)
+        else:
+            # If not Yahoo, assume AlphaVantage for now
+            result = cmd.get_alpha_vantage_stock_quote(ticker)
 
         if result:
             # Replace Currency object with its printable representation
             result['currency'] = result['currency'].iso_code
-            result['ticker'] = kwargs['stock']
+            result['ticker'] = ticker
 
         return Response(result, status=status.HTTP_200_OK)
+
 
 class ExchangeRatesView(APIView):
     '''Get exchange rates'''
