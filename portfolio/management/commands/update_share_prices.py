@@ -139,7 +139,7 @@ class Command(BaseCommand):
         quote['date'] = latest_date
 
         exhange = quote_meta['exchangeName']
-        if exhange == 'HE':
+        if exhange == 'HEL':
             currency = Currency.objects.filter(
                 iso_code='EUR')[0]
         else:
