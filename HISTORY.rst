@@ -1,6 +1,18 @@
 .. :changelog:
 
 
+v2.2.2 (2018-12-26)
+-------------------
+- Bump version: 2.2.1 → 2.2.2. [Petri Jokimies]
+- Fix typo when calling Yahoo tracker. [Petri Jokimies]
+
+
+v2.2.1 (2018-12-26)
+-------------------
+- Bump version: 2.2.0 → 2.2.1. [Petri Jokimies]
+- Fix exhange name in Yahoo tracker. [Petri Jokimies]
+
+
 v2.2.0 (2018-12-26)
 -------------------
 - Bump version: 2.1.6 → 2.2.0. [Petri Jokimies]
