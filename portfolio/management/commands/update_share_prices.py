@@ -58,7 +58,7 @@ class Command(BaseCommand):
                 quote = self.get_alpha_vantage_stock_quote(security.ticker,
                                                            AV_DELAY)
             elif security.price_tracker.name == 'Yahoo':
-                quote = self.get_yahoo_stock_quote(security.cker)
+                quote = self.get_yahoo_stock_quote(security.ticker)
             else:
                 raise ImproperlyConfigured(
                     'Unkown price tracker {}'.format(
@@ -128,9 +128,7 @@ class Command(BaseCommand):
             (latest_price - previous_close ) / previous_close * 100
         )
 
-        print(latest_price)
         period_close = quote_period['close'][-1]
-        print(period_close)
 
         quote = {}
         quote['price'] = '{:.2f}'.format(latest_price)
