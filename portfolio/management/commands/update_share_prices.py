@@ -59,6 +59,8 @@ class Command(BaseCommand):
                                                            AV_DELAY)
             elif security.price_tracker.name == 'Yahoo':
                 quote = self.get_yahoo_stock_quote(security.ticker)
+            elif security.price_tracker.name == 'IEXCloud':
+                quote = self.get_iexcloud_stock_quote(security.ticker)
             else:
                 raise ImproperlyConfigured(
                     'Unkown price tracker {}'.format(
@@ -76,6 +78,78 @@ class Command(BaseCommand):
                                                'currency': quote['currency'],
                                                'change': quote['change'],
                                                'change_percentage': quote['change_percentage']})
+
+    def get_iexcloud_stock_quote(self, ticker_symbol):
+        """
+        {
+        "avgTotalVolume": 1366647,
+        "calculationPrice": "close",
+        "change": 0.25,
+        "changePercent": 0.01233,
+        "close": 20.52,
+        "closeTime": 1554494524181,
+        "companyName": "Tanger Factory Outlet Centers, Inc.",
+        "delayedPrice": 20.52,
+        "delayedPriceTime": 1554494524185,
+        "extendedChange": 0.06,
+        "extendedChangePercent": 0.00292,
+        "extendedPrice": 20.58,
+        "extendedPriceTime": 1554671742673,
+        "high": 20.58,
+        "iexAskPrice": null,
+        "iexAskSize": null,
+        "iexBidPrice": null,
+        "iexBidSize": null,
+        "iexLastUpdated": null,
+        "iexMarketPercent": null,
+        "iexRealtimePrice": null,
+        "iexRealtimeSize": null,
+        "iexVolume": null,
+        "latestPrice": 20.52,
+        "latestSource": "Close",
+        "latestTime": "April 5, 2019",
+        "latestUpdate": 1554494524181,
+        "latestVolume": 1770483,
+        "low": 20.25,
+        "marketCap": 1927689840,
+        "open": null,
+        "openTime": null,
+        "peRatio": 45.78,
+        "previousClose": 20.27,
+        "symbol": "SKT",
+        "week52High": 24.91,
+        "week52Low": 19.75,
+        "ytdChange": 0.01772
+        }
+
+        """
+
+        API_KEY = getattr(settings, "IEXCLOUD_API_KEY", None)
+        if not API_KEY:
+            raise ImproperlyConfigured(
+                'IEXCLOUD_API_KEY not set')
+        url = 'https://cloud.iexapis.com/beta/stock/' + ticker_symbol + \
+              '/quote?token=' + API_KEY
+        response = requests.get(url)
+        iexquote =  json.loads(response.content.decode('unicode_escape'),
+                                 object_pairs_hook=OrderedDict)
+        quote = {}
+        quote['price'] = iexquote['latestPrice']
+        quote['change'] = iexquote['change']
+        quote['change_percantage'] = iexquote['changePercent'] * 100
+        # Doesn't support Nasdaq Helsinki, assuming USD for the currency
+        currency = Currency.objects.filter(
+                    iso_code='USD')[0]
+        quote['currency'] = currency
+        # lastest update price is in milliseconds since epoch
+        # (https://iexcloud.io/docs/api/#quote)
+        # Interested only in in date update was made
+        latest_update = iexquote['latestUpdate'] / 1000
+        latest_date = time.strftime("%Y-%m-%d",
+                                    time.localtime(latest_update))
+        quote['date'] = latest_date
+
+        return quote
 
     def get_yahoo_stock_quote(self, ticker_symbol):
         """
