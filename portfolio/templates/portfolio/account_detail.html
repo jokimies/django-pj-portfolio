@@ -260,7 +260,7 @@ Account
 	  </tr>
 	</thead>
 	<tbody>
-	  {% for security, data in account.positions.items %}
+	  {% for security, data in account.get_positions.items %}
 	    {% if security != '$CASH' and data.shares >= 1 %}
 	      <tr>
 		<td>{{ security }}</td>
