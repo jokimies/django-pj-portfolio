@@ -236,6 +236,8 @@ class SecurityQuoteView(APIView):
         # Find out price tracker and fetch quote from it
         if (security.price_tracker.name == 'Yahoo'):
             result = cmd.get_yahoo_stock_quote(ticker)
+        elif security.price_tracker.name == 'IEXCloud':
+            result = cmd.get_iexcloud_stock_quote(ticker)
         else:
             # If not Yahoo, assume AlphaVantage for now
             result = cmd.get_alpha_vantage_stock_quote(ticker)

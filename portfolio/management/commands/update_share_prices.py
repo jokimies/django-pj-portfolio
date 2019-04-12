@@ -136,7 +136,7 @@ class Command(BaseCommand):
         quote = {}
         quote['price'] = iexquote['latestPrice']
         quote['change'] = iexquote['change']
-        quote['change_percantage'] = iexquote['changePercent'] * 100
+        quote['change_percentage'] = '{:.3}'.format(iexquote['changePercent'] * 100)
         # Doesn't support Nasdaq Helsinki, assuming USD for the currency
         currency = Currency.objects.filter(
                     iso_code='USD')[0]
