@@ -1,6 +1,33 @@
 .. :changelog:
 
 
+v2.3.2 (2019-04-19)
+-------------------
+- Bump version: 2.3.1 → 2.3.2. [Petri Jokimies]
+- Make iexcloud change percent decimal. [Petri Jokimies]
+
+
+
+
+
+
+
+v2.3.1 (2019-04-12)
+-------------------
+- Bump version: 2.3.0 → 2.3.1. [Petri Jokimies]
+- Fix IEXCloud change percentage. [Petri Jokimies]
+
+
+v2.3.0 (2019-04-11)
+-------------------
+- Bump version: 2.2.2 → 2.3.0. [Petri Jokimies]
+- Correct function to get possessions. [Petri Jokimies]
+
+
+
+- Add possibility to fetch quote from IEXCloud. [Petri Jokimies]
+
+
 v2.2.2 (2018-12-26)
 -------------------
 - Bump version: 2.2.1 → 2.2.2. [Petri Jokimies]
@@ -63,16 +90,23 @@ v2.1.5 (2018-10-19)
 
 v2.1.4 (2018-09-01)
 -------------------
+
+New
+~~~
+- Allow multiple updates to share prices. [Petri Jokimies]
+
+
+
+
+
+
+
+
+- Add security listing. [Petri Jokimies]
+
+Other
+~~~~~
 - Bump version: 2.1.3 → 2.1.4. [Petri Jokimies]
-- New: usr: Allow multiple updates to share prices. [Petri Jokimies]
-
-
-
-
-
-
-
-
 - Add optional delay when using AlphaVantage. [Petri Jokimies]
 
 
@@ -83,7 +117,6 @@ v2.1.4 (2018-09-01)
 
 
 
-- New: usr: Add security listing. [Petri Jokimies]
 
 
 v2.1.3 (2018-07-26)
@@ -135,43 +168,28 @@ v2.1.1 (2018-06-10)
 
 v2.1.0 (2018-06-03)
 -------------------
-
-Fix
-~~~
-- *google*: Remove debug logging. [Petri Jokimies]
-
-Other
-~~~~~
 - Bump version: 2.0.6 → 2.1.0. [Petri Jokimies]
 - Use  AlphaVantatge as 'local' price provider. [Petri Jokimies]
 
 
 
 - Add AlphaVantage as a price tracker. [Petri Jokimies]
+- Fix(google): Remove debug logging. [Petri Jokimies]
 
 
 v2.0.6 (2017-11-28)
 -------------------
-
-New features
-~~~~~~~~~~~~
-- *quote api*: Provide API for stock quotes. [Petri Jokimies]
-
-
-
-
-
-
-
-
-Fix
-~~~
-- *google*: Use local google finance proxy. [Petri Jokimies]
-
-Other
-~~~~~
 - Bump version: 2.0.5 → 2.0.6. [Petri Jokimies]
-- *google*: Change Yahoo url in test. [Petri Jokimies]
+- Fix(google): Use local google finance proxy. [Petri Jokimies]
+- Feat(quote api): Provide API for stock quotes. [Petri Jokimies]
+
+
+
+
+
+
+
+- Test(google): Change Yahoo url in test. [Petri Jokimies]
 
 
 
@@ -191,88 +209,65 @@ v2.0.5 (2017-10-07)
 
 v2.0.4 (2017-02-23)
 -------------------
-
-Documentation
-~~~~~~~~~~~~~
-- *HISTORY*: Update HISTORY. [Petri Jokimies]
-
-Other
-~~~~~
 - Bump version: 2.0.3 → 2.0.4. [Petri Jokimies]
 - Change Yahoo url. [Petri Jokimies]
 
 
 
+- Docs(HISTORY): Update HISTORY. [Petri Jokimies]
 
 
 v2.0.3 (2017-01-08)
 -------------------
-
-Fix
-~~~
-- Don't load anglular-scripts in templates. [Petri Jokimies]
-
-
-
-
-
-
-
-
-- *summary*: Fix improperly detected currency. [Petri Jokimies]
-
-
-
-
-
-
-
-
-
-- Use plain get in retrieving exchange rates. [Petri Jokimies]
-
-
-
-
-
-
-Documentation
-~~~~~~~~~~~~~
-- *HISTORY*: Update HISTORY. [Petri Jokimies]
-
-Other
-~~~~~
 - Bump version: 2.0.2 → 2.0.3. [Petri Jokimies]
+- Fix(): Don't load anglular-scripts in templates. [Petri Jokimies]
+
+
+
+
+
+
+
+
+- Fix(summary): Fix improperly detected currency. [Petri Jokimies]
+
+
+
+
+
+
+
+
+
+- Fix(): Use plain get in retrieving exchange rates. [Petri Jokimies]
+
+
+
+
+
+- Docs(HISTORY): Update HISTORY. [Petri Jokimies]
 
 
 v2.0.2 (2016-12-31)
 -------------------
-
-New features
-~~~~~~~~~~~~
-- *bumpversion*: Configure bumpversion. [Petri Jokimies]
-
-Fix
-~~~
-- *management*: Set defaults to google quote. [Petri Jokimies]
-
-
-
-- *urls*: Change deprecated django.conf.urls.patterns. [Petri Jokimies]
-- *DividendByYear*: Fix JSON serialising. [Petri Jokimies]
-
-
-
-
-
-
-
-
-
-Other
-~~~~~
 - Bump version: 2.0.1 → 2.0.2. [Petri Jokimies]
-- Add pytest & bumpversion to requirements. [Petri Jokimies]
+- Feat(bumpversion): Configure bumpversion. [Petri Jokimies]
+- Test(): Add pytest & bumpversion to requirements. [Petri Jokimies]
+- Fix(management): Set defaults to google quote. [Petri Jokimies]
+
+
+
+- Fix(urls): Change deprecated django.conf.urls.patterns. [Petri
+  Jokimies]
+- Fix(DividendByYear): Fix JSON serialising. [Petri Jokimies]
+
+
+
+
+
+
+
+
 - History update. [Petri Jokimies]
 
 
@@ -311,13 +306,6 @@ v1.2.1 (2016-11-08)
 
 v1.2.0 (2016-11-03)
 -------------------
-
-Fix
-~~~
-- *requirements*: beatifulsoup added to requirements. [Petri Jokimies]
-
-Other
-~~~~~
 - Bump version 1.1.1 to 1.2.0. [Petri Jokimies]
 - Add possibility to get quotes from Yahoo Finance. [Petri Jokimies]
 
@@ -325,26 +313,22 @@ Other
 
 
 
+- Fix(requirements): beatifulsoup added to requirements. [Petri
+  Jokimies]
 
 
 v1.1.1 (2016-03-06)
 -------------------
-
-New features
-~~~~~~~~~~~~
-- *summary detail*: Flash changed prices. [Petri Jokimies]
+- Feat(summary detail): Flash changed prices. [Petri Jokimies]
 
 
 
-
-Other
-~~~~~
-- *account summary*: Use latest date from Google Finance. [Petri
+- Fix(account summary): Use latest date from Google Finance. [Petri
   Jokimies]
 
 
 
-- *account summary*: Sort table using Angular's orderBy. [Petri
+- Refactor(account summary): Sort table using Angular's orderBy. [Petri
   Jokimies]
 
 
@@ -353,41 +337,39 @@ Other
 
 
 
-- *securities service*: Use smaller number of mocked results. [Petri
+- Test(securities service): Use smaller number of mocked results. [Petri
   Jokimies]
 
 
 
-- *gulp*: Output results in separate directory. [Petri Jokimies]
+- Test(gulp): Output results in separate directory. [Petri Jokimies]
 
 
 
-- *account summary*: $timeout parameters changed in 1.4.x. [Petri
+- Fix(account summary): $timeout parameters changed in 1.4.x. [Petri
   Jokimies]
 
 
 
 
 
-- *account summary*: More tests. [Petri Jokimies]
-- *position service*: Test for google_quote. [Petri Jokimies]
-- *karma conf*: Run coverage. [Petri Jokimies]
+- Test(account summary): More tests. [Petri Jokimies]
+- Test(position service): Test for google_quote. [Petri Jokimies]
+- Test(karma conf): Run coverage. [Petri Jokimies]
 
 
 v1.1.0 (2016-02-16)
 -------------------
-
-New features
-~~~~~~~~~~~~
-- *account summary*: Use correct currency in calculations, use spinner.
-  [Petri Jokimies]
-
-
+- Test(): More files to watch in karma.conf. [Petri Jokimies]
+- Test(): Added test for Angular currency service. [Petri Jokimies]
+- Test(karma): Using jasmine-query for fixtures. [Petri Jokimies]
+- Chore(gulp): First gulp tasks. [Petri Jokimies]
+- Fix(account summary): Removed unnecessary DB queries. [Petri Jokimies]
 
 
 
-
-
+- Feat(account summary): Use correct currency in calculations, use
+  spinner. [Petri Jokimies]
 
 
 
@@ -396,26 +378,23 @@ New features
 
 
 
-- *account summary*: Added market value calculation. [Petri Jokimies]
-- *account summary*: Display live values. [Petri Jokimies]
-- *account summary*: Count total market value. [Petri Jokimies]
-- *account summary*: Initial price live updates. [Petri Jokimies]
 
 
 
-- Added API to get list of holdings. [Petri Jokimies]
-
-Other
-~~~~~
-- More files to watch in karma.conf. [Petri Jokimies]
-- Added test for Angular currency service. [Petri Jokimies]
-- *karma*: Using jasmine-query for fixtures. [Petri Jokimies]
-- *gulp*: First gulp tasks. [Petri Jokimies]
-- *account summary*: Removed unnecessary DB queries. [Petri Jokimies]
 
 
 
-- *account*: Make AccountBase more usable. [Petri Jokimies]
+
+- Feat(account summary): Added market value calculation. [Petri
+  Jokimies]
+- Feat(account summary): Display live values. [Petri Jokimies]
+- Feat(account summary): Count total market value. [Petri Jokimies]
+- Feat(account summary): Initial price live updates. [Petri Jokimies]
+
+
+
+- Feat(): Added API to get list of holdings. [Petri Jokimies]
+- Test(account): Make AccountBase more usable. [Petri Jokimies]
 
 
 
@@ -423,40 +402,26 @@ Other
 
 v1.0.1 (2016-01-15)
 -------------------
-
-Fix
-~~~
-- *requirements*: Specific about Django version. [Petri Jokimies]
+- Fix(update prices): Adapt to KL's new web page. [Petri Jokimies]
+- Fix(requirements): Specific about Django version. [Petri Jokimies]
 
 
 
 
 
 
-
-Other
-~~~~~
-- *update prices*: Adapt to KL's new web page. [Petri Jokimies]
 
 
 v1.0.0 (2015-11-30)
 -------------------
-
-New features
-~~~~~~~~~~~~
-- Add management commands to update prices. [Petri Jokimies]
+- Docs(): Added comments for management commads. [Petri Jokimies]
+- Feat(): Add management commands to update prices. [Petri Jokimies]
 
 
 
-
-Refactor
-~~~~~~~~
-- *test*: Security test and factories separeted. [Petri Jokimies]
-- *test*: Price tests and factories sepateted. [Petri Jokimies]
-
-Documentation
-~~~~~~~~~~~~~
-- Added comments for management commads. [Petri Jokimies]
+- Refactor(test): Security test and factories separeted. [Petri
+  Jokimies]
+- Refactor(test): Price tests and factories sepateted. [Petri Jokimies]
 
 
 v0.1.0 (2015-09-25)
